@@ -20,16 +20,13 @@ class Chargement:
             with open(fichier_json, 'r', encoding='utf-8') as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"ERREUR: Le fichier de configuration '{fichier_json}' est introuvable.")
             return [], None
         except json.JSONDecodeError:
-            print(f"ERREUR: Le fichier '{fichier_json}' contient un JSON invalide.")
             return [], None
 
         salles_creees = {}
 
         if 'rooms' not in data:
-            print("ERREUR: Le JSON doit contenir une clé 'rooms'.")
             return [], None
 
         for room_id, room_data in data['rooms'].items():
@@ -37,8 +34,7 @@ class Chargement:
                 new_room = Room(room_data['name'], room_data['description'])
                 salles_creees[room_id] = new_room
             except KeyError:
-                print(f"ERREUR: Données manquantes (name/description) pour la salle ID '{room_id}'.")
-
+                continue
         for room_id, room_data in data['rooms'].items():
             if room_id not in salles_creees:
                 continue
@@ -52,16 +48,20 @@ class Chargement:
                     elif destination_id in salles_creees:
                         current_room_obj.exits[direction] = salles_creees[destination_id]
                     else:
-                        print(f"AVERTISSEMENT: La sortie '{direction}' de '{room_id}' mène à un ID inconnu: '{destination_id}'.")
+                        continue
+            
+            if "challenge" in room_data:
+                current_room_obj.challenge = room_data["challenge"]
+
+            if "challenge_exit" in room_data:
+                current_room_obj.challenge_exit = room_data["challenge_exit"]
+            else:
+                current_room_obj.challenge_exit = "N"
 
         start_room_id = data.get('start_room')
         start_room_obj = None
         
-        if not start_room_id:
-            print("ERREUR: 'start_room' n'est pas défini dans le JSON.")
-        else:
+        if start_room_id:
             start_room_obj = salles_creees.get(start_room_id)
-            if not start_room_obj:
-                print(f"ERREUR: La salle de départ ID '{start_room_id}' n'a pas été trouvée.")
 
         return list(salles_creees.values()), start_room_obj

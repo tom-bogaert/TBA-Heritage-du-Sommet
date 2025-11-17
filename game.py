@@ -19,6 +19,7 @@ class Game:
     
     # Setup the game
     def setup(self):
+        fichier_config_jeu = "data.json"
 
         help = Command("help", " : afficher cette aide", Actions.help, 0)
         self.commands["help"] = help
@@ -26,7 +27,8 @@ class Game:
         self.commands["quit"] = quit
         go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
         self.commands["go"] = go
-        fichier_config_jeu = "data.json"
+        escalade = Command("escalade", " : Tenter de grimper la paroi (lance un QTE)", Actions.climb, 0)
+        self.commands["escalade"] = escalade
         
         salles_chargees, salle_depart = Chargement.charger_depuis_json(fichier_config_jeu)
         if not salles_chargees or not salle_depart:
@@ -45,29 +47,29 @@ class Game:
     # Play the game
     def play(self):
         self.setup()
+        if self.finished:
+            print("Erreur de chargement.")
+            return None
+            
         self.print_welcome()
-        # Loop until the game is finished
         while not self.finished:
-            # Get the command from the player
             self.process_command(input("> "))
         return None
 
     # Process the command entered by the player
     def process_command(self, command_string) -> None:
 
-        # Split the command string into a list of words
-        list_of_words = command_string.split(" ")
-
-        command_word = list_of_words[0]
-
-        if not command_string.strip():
+        stripped_input = command_string.strip()
+        
+        if not stripped_input:
             print() 
             return
 
-        # If the command is not recognized, print an error message
+        list_of_words = stripped_input.split(" ")
+        command_word = list_of_words[0]
+
         if command_word not in self.commands.keys():
-            print(f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
-        # If the command is recognized, execute it
+            print(f"\nVous ne savez pas ce qu'est '{command_word}'\n")
         else:
             command = self.commands[command_word]
             command.action(self, list_of_words, command.number_of_parameters)

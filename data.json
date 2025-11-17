@@ -1,65 +1,388 @@
 {
-  "start_room": "swamp",
+  "start_room": "l1_tente",
   "rooms": {
-    "forest": {
-      "name": "Forest",
-      "description": "une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.",
-      "exits": {
-        "N": "cave",
-        "E": "tower",
-        "S": "castle",
-        "O": null
-      }
+    
+    "l1_paroi": {
+      "name": "Paroi Vierge (Niveau 1)",
+      "description": "La Face Est vous domine. Un mur de roche et de glace qui semble vous ignorer.",
+      "exits": { "N": null, "E": "l1_vue", "S": "l1_tente", "O": null }
     },
-    "tower": {
-      "name": "Tower",
-      "description": "une immense tour en pierre qui s'élève au dessus des nuages.",
-      "exits": {
-        "N": "cottage",
-        "E": null,
-        "S": null,
-        "O": "forest"
-      }
+    "l1_vue": {
+      "name": "Point de Vue Pégase (Lore)",
+      "description": "Un petit promontoire. Des drapeaux de prière usés. Vous trouvez la première page du 'Journal Pégase 1'.",
+      "exits": { "N": null, "E": null, "S": "l1_stock", "O": "l1_paroi" }
     },
-    "cave": {
-      "name": "Cave",
-      "description": "une grotte profonde et sombre. Des voix semblent provenir des profondeurs.",
-      "exits": {
-        "N": null,
-        "E": "cottage",
-        "S": "forest",
-        "O": null
-      }
+    "l1_tente": {
+      "name": "Votre Tente (Camp de Base)",
+      "description": "Votre seul refuge. Le chaos organisé du camp de base. Le bruit des générateurs est un faible rempart contre le silence écrasant de la montagne.",
+      "exits": { "N": "l1_paroi", "E": "l1_stock", "S": "l1_mess", "O": null }
     },
-    "cottage": {
-      "name": "Cottage",
-      "description": "un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.",
-      "exits": {
-        "N": null,
-        "E": null,
-        "S": "tower",
-        "O": "cave"
-      }
+    "l1_stock": {
+      "name": "Zone de Stockage (Camp de Base)",
+      "description": "Des barils, des caisses et des bouteilles d'oxygène.",
+      "exits": { "N": "l1_vue", "E": null, "S": null, "O": "l1_tente" }
     },
-    "swamp": {
-      "name": "Swamp",
-      "description": "un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.",
-      "exits": {
-        "N": "tower",
-        "E": null,
-        "S": null,
-        "O": "castle"
-      }
+    "l1_mess": {
+      "name": "Mess des Équipes (Lore)",
+      "description": "D'autres équipes vous ignorent, trop concentrées sur leurs propres objectifs. L'ambiance est tendue.",
+      "exits": { "N": "l1_tente", "E": "l1_glacier", "S": null, "O": null }
     },
-    "castle": {
-      "name": "Castle",
-      "description": "un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.",
-      "exits": {
-        "N": "forest",
-        "E": "swamp",
-        "S": null,
-        "O": null
-      }
+    "l1_glacier": {
+      "name": "Entrée du Glacier",
+      "description": "Ici, le bruit du camp s'estompe. Vous posez le pied sur la glace. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "challenge_exit": "N",
+      "exits": { "N": "l2_entree", "E": null, "S": null, "O": "l1_mess" }
+    },
+
+    
+    "l2_entree": {
+      "name": "Entrée du Glacier Inférieur (Niveau 2)",
+      "description": "Un champ de mines de glace. Le glacier craque.",
+      "exits": { "N": "l2_crevasse2", "E": "l2_serac", "S": null, "O": null }
+    },
+    "l2_serac": {
+      "name": "Sérac Instable",
+      "description": "Une tour de glace précaire. Vous passez sans respirer.",
+      "exits": { "N": "l2_moraine", "E": "l2_crevasse3", "S": null, "O": "l2_entree" }
+    },
+    "l2_crevasse3": {
+      "name": "Crevasse Béante",
+      "description": "Un abîme sombre. Le vent siffle depuis les profondeurs.",
+      "exits": { "N": "l2_cimet", "E": null, "S": null, "O": "l2_serac" }
+    },
+    "l2_crevasse2": {
+      "name": "Champ de Crevasses",
+      "description": "Vous devez sonder la neige à chaque pas.",
+      "exits": { "N": "l2_pont", "E": "l2_moraine", "S": "l2_entree", "O": null }
+    },
+    "l2_moraine": {
+      "name": "Moraine Centrale",
+      "description": "Une crête de débris rocheux au milieu de la glace. Un semblant de sécurité.",
+      "exits": { "N": "l2_crevasse1", "E": "l2_cimet", "S": "l2_serac", "O": "l2_crevasse2" }
+    },
+    "l2_cimet": {
+      "name": "Cimetière des Bouteilles",
+      "description": "Des centaines de bouteilles d'O₂ vides, laissées par des expéditions passées. Un mémorial de l'échec.",
+      "exits": { "N": "l2_abc", "E": null, "S": "l2_crevasse3", "O": "l2_moraine" }
+    },
+    "l2_pont": {
+      "name": "Pont de Glace Fragile",
+      "description": "Une fine lame de glace au-dessus d'une crevasse.",
+      "exits": { "N": null, "E": "l2_crevasse1", "S": "l2_crevasse2", "O": null }
+    },
+    "l2_crevasse1": {
+      "name": "Crevasse Cachée",
+      "description": "Le danger est partout.",
+      "exits": { "N": null, "E": "l2_abc", "S": "l2_moraine", "O": "l2_pont" }
+    },
+    "l2_abc": {
+      "name": "Camp de Base Avancé",
+      "description": "Un camp précaire, battu par les vents. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l3_mur", "E": null, "S": "l2_cimet", "O": "l2_crevasse1" }
+    },
+
+    
+    "l3_mur": {
+      "name": "Mur d'Entrée (Niveau 3)",
+      "description": "La 'vraie' grimpe commence. Ce n'est plus une marche. C'est un combat vertical. 70 degrés de glace bleue.",
+      "exits": { "N": "l3_diedre", "E": "l3_piolet", "S": null, "O": null }
+    },
+    "l3_piolet": {
+      "name": "Le Piolet Rouge (Lore)",
+      "description": "Un piolet est planté dans la glace, une sangle rouge vif. Il est impossible à retirer.",
+      "exits": { "N": "l3_paroi2", "E": null, "S": null, "O": "l3_mur" }
+    },
+    "l3_diedre": {
+      "name": "Le Grand Dièdre",
+      "description": "Une section technique qui met votre endurance à rude épreuve.",
+      "exits": { "N": "l3_paroi1", "E": "l3_paroi2", "S": "l3_mur", "O": null }
+    },
+    "l3_paroi2": {
+      "name": "Paroi Lisse",
+      "description": "La glace est vitrifiée. Chaque coup de piolet est crucial.",
+      "exits": { "N": "l3_camp1", "E": null, "S": "l3_piolet", "O": "l3_diedre" }
+    },
+    "l3_paroi1": {
+      "name": "Paroi Lisse",
+      "description": "Le vent glacial vous brûle le visage. Continuez à grimper.",
+      "exits": { "N": null, "E": "l3_camp1", "S": "l3_diedre", "O": null }
+    },
+    "l3_camp1": {
+      "name": "Camp 1 (Sortie N3)",
+      "description": "Un repos précaire. Une plateforme minuscule taillée dans la glace. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l4_camp1_entree", "E": null, "S": "l3_paroi2", "O": "l3_paroi1" }
+    },
+
+    
+    "l4_crevasse": {
+      "name": "Crevasse (Niveau 4)",
+      "description": "Un autre vide à franchir.",
+      "exits": { "N": "l4_camp1_entree", "E": "l4_dome", "S": null, "O": null }
+    },
+    "l4_dome": {
+      "name": "Le Dôme de Glace",
+      "description": "Une formation étrange. Vous ne vous attardez pas.",
+      "exits": { "N": "l4_traversee", "E": "l4_camp1_5", "S": null, "O": "l4_crevasse" }
+    },
+    "l4_camp1_5": {
+      "name": "Camp 1.5 Abandonné",
+      "description": "Des tentes déchirées. Personne n'est resté ici bien longtemps.",
+      "exits": { "N": "l4_serac2", "E": null, "S": null, "O": "l4_dome" }
+    },
+    "l4_camp1_entree": {
+      "name": "Entrée du Labyrinthe (Niveau 4)",
+      "description": "Vous entrez dans le labyrinthe de séracs.",
+      "exits": { "N": "l4_serac1", "E": "l4_traversee", "S": "l3_camp1", "O": "l4_crevasse" }
+    },
+    "l4_traversee": {
+      "name": "Traversée des Séracs",
+      "description": "Des tours de glace de la taille d'immeubles, prêtes à s'effondrer. Ne restez pas ici.",
+      "exits": { "N": "l4_goulotte", "E": "l4_serac2", "S": "l4_dome", "O": "l4_camp1_entree" }
+    },
+    "l4_serac2": {
+      "name": "Sérac Menaçant",
+      "description": "Un grondement sourd. Le temps presse.",
+      "exits": { "N": "l4_plateau", "E": null, "S": "l4_camp1_5", "O": "l4_traversee" }
+    },
+    "l4_serac1": {
+      "name": "Sérac Menaçant",
+      "description": "Le silence est un piège. Avancez.",
+      "exits": { "N": null, "E": "l4_goulotte", "S": "l4_camp1_entree", "O": null }
+    },
+    "l4_goulotte": {
+      "name": "La Goulotte Noire",
+      "description": "Un couloir étroit. Un piège potentiel.",
+      "exits": { "N": null, "E": "l4_plateau", "S": "l4_traversee", "O": "l4_serac1" }
+    },
+    "l4_plateau": {
+      "name": "Plateau du Vent",
+      "description": "Une zone exposée. Le vent vous arrache presque à la paroi. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l5_plateau_entree", "E": null, "S": "l4_serac2", "O": "l4_goulotte" }
+    },
+
+    
+    "l5_plateau_entree": {
+      "name": "Plateau du Vent",
+      "description": "Vous êtes au-dessus des nuages. Vous n'entendez plus rien, sauf votre propre sang.",
+      "exits": { "N": "l5_mur", "E": "l5_paroi2", "S": null, "O": null }
+    },
+    "l5_paroi2": {
+      "name": "Paroi Vierge",
+      "description": "La 'Voix Froide' commence. (Hallucinations auditives textuelles).",
+      "exits": { "N": "l5_jardin", "E": "l5_vide2", "S": null, "O": "l5_plateau_entree" }
+    },
+    "l5_vide2": {
+      "name": "Le Vide",
+      "description": "Trois kilomètres de vide sous vos pieds.",
+      "exits": { "N": "l5_vide1", "E": null, "S": null, "O": "l5_paroi2" }
+    },
+    "l5_mur": {
+      "name": "Le Mur Lisse",
+      "description": "Votre esprit commence à vous jouer des tours.",
+      "exits": { "N": "l5_camp2", "E": "l5_jardin", "S": "l5_plateau_entree", "O": null }
+    },
+    "l5_jardin": {
+      "name": "Jardin de Stalactites",
+      "description": "Des formations de glace étranges, comme des griffes.",
+      "exits": { "N": "l5_paroi1", "E": "l5_vide1", "S": "l5_paroi2", "O": "l5_mur" }
+    },
+    "l5_vide1": {
+      "name": "Le Vide",
+      "description": "Vous n'êtes plus seul.",
+      "exits": { "N": "l5_cheminee", "E": null, "S": "l5_vide2", "O": "l5_jardin" }
+    },
+    "l5_camp2": {
+      "name": "Camp 2 Soviétique",
+      "description": "Un ancien camp, à moitié enfoui. Un rare moment de répit.",
+      "exits": { "N": null, "E": "l5_paroi1", "S": "l5_mur", "O": null }
+    },
+    "l5_paroi1": {
+      "name": "Paroi Vierge",
+      "description": "Les 'Échos' s'intensifient.",
+      "exits": { "N": null, "E": "l5_cheminee", "S": "l5_jardin", "O": "l5_camp2" }
+    },
+    "l5_cheminee": {
+      "name": "Cheminée Hurlante",
+      "description": "Le vent produit un son d'outre-tombe. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l6_base", "E": null, "S": "l5_vide1", "O": "l5_paroi1" }
+    },
+
+    
+    "l6_base": {
+      "name": "Base de la Pyramide (Niveau 6)",
+      "description": "Une pyramide de roche noire et de glace vitrifiée.",
+      "exits": { "N": "l6_araignee", "E": "l6_camp2_entree", "S": null, "O": null }
+    },
+    "l6_camp2_entree": {
+      "name": "Accès Camp 2",
+      "description": "L'entrée du Niveau 6. Vous êtes maintenant dans la Pyramide Noire.",
+      "exits": { "N": "l6_echo", "E": null, "S": null, "O": "l6_base" }
+    },
+    "l6_araignee": {
+      "name": "L'Araignée",
+      "description": "Une section de grimpe mixte incroyablement technique.",
+      "exits": { "N": "l6_nid", "E": "l6_echo", "S": "l6_base", "O": null }
+    },
+    "l6_echo": {
+      "name": "L'Écho du Soviétique",
+      "description": "Une hallucination agressive vous barre la route.",
+      "exits": { "N": "l6_paroi", "E": null, "S": "l6_camp2_entree", "O": "l6_araignee" }
+    },
+    "l6_nid": {
+      "name": "Le Nid",
+      "description": "Le 'Gardien' avant la Zone Mortelle. Un dernier repos. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l7_nid_entree", "E": "l6_paroi", "S": "l6_araignee", "O": null }
+    },
+    "l6_paroi": {
+      "name": "Paroi Vierge",
+      "description": "La roche est froide sous vos gants.",
+      "exits": { "N": null, "E": null, "S": "l6_echo", "O": "l6_nid" }
+    },
+
+    
+    "l7_nid_entree": {
+      "name": "Entrée Zone Mortelle (Niveau 7)",
+      "description": "Vous entrez dans la Zone Mortelle. L'air est du poison.",
+      "exits": { "N": "l7_balcon", "E": "l7_vide", "S": null, "O": null }
+    },
+    "l7_vide": {
+      "name": "Vide",
+      "description": "L'hypoxie commence. Votre corps se dévore lui-même.",
+      "exits": { "N": "l7_refuge", "E": null, "S": null, "O": "l7_nid_entree" }
+    },
+    "l7_balcon": {
+      "name": "Le Balcon des Échos",
+      "description": "Les hallucinations deviennent visuelles. L'interface ment.",
+      "exits": { "N": "l7_paroi", "E": "l7_refuge", "S": "l7_nid_entree", "O": null }
+    },
+    "l7_refuge": {
+      "name": "Refuge Zéro",
+      "description": "Un abri impossible. Des notes que vous ne pouvez pas comprendre.",
+      "exits": { "N": "l7_veine", "E": null, "S": "l7_vide", "O": "l7_balcon" }
+    },
+    "l7_paroi": {
+      "name": "Paroi Lisse",
+      "description": "Chaque geste coûte de l'O₂.",
+      "exits": { "N": null, "E": "l7_veine", "S": "l7_balcon", "O": null }
+    },
+    "l7_veine": {
+      "name": "La Veine Jaune ",
+      "description": "Une bande de roche distinctive. La sortie est proche. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l8_veine_entree", "E": null, "S": "l7_refuge", "O": "l7_paroi" }
+    },
+
+    
+    "l8_veine_entree": {
+      "name": "Base du Goulot (Niveau 8)",
+      "description": "Vous entrez dans le couloir de mort vertical.",
+      "exits": { "N": "l8_pegase", "E": null, "S": null, "O": null }
+    },
+    "l8_pegase": {
+      "name": "Cadavre 'Pégase'",
+      "description": "Vous le trouvez. Gelé. Sa radio grésille. Le Locus est proche, la Sanité s'effondre.",
+      "exits": { "N": "l8_goulot", "E": null, "S": "l8_veine_entree", "O": null }
+    },
+    "l8_goulot": {
+      "name": "Le Goulot d'Étranglement",
+      "description": "Au-dessus de vous, un sérac géant. En dessous, 3km de vide.",
+      "exits": { "N": "l8_traversee", "E": null, "S": "l8_pegase", "O": null }
+    },
+    "l8_traversee": {
+      "name": "Traversée Finale",
+      "description": "Vous êtes exposé. La fin est proche, d'une manière ou d'une autre.",
+      "exits": { "N": "l8_arete", "E": null, "S": "l8_goulot", "O": null }
+    },
+    "l8_arete": {
+      "name": "Arête Sommitale",
+      "description": "Vous êtes sur le fil du rasoir. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l9_sommet_entree", "E": null, "S": "l8_traversee", "O": null }
+    },
+
+    
+    "l9_sommet_entree": {
+      "name": "Le Sommet (Niveau 9)",
+      "description": "Vous y êtes. 8611m. Le sommet du monde. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l9_ciel", "E": null, "S": null, "O": null }
+    },
+    "l9_ciel": {
+      "name": "Le Ciel Noir",
+      "description": "Il n'y a rien. Juste le vent, le vide, et le ciel noir d'encre. (Phase d'Escalade)",
+      "challenge": {
+        "nb_tours": 3,
+        "min_inputs": 2,
+        "max_inputs": 4,
+        "time": 3.0,
+        "pool": "AGP"
+      },
+      "exits": { "N": "l9_locus", "E": null, "S": "l9_sommet_entree", "O": null }
+    },
+    "l9_locus": {
+      "name": "LE LOCUS",
+      "description": "Puis, vous le voyez...",
+      "exits": { "N": null, "E": null, "S": "l9_ciel", "O": null }
     }
   }
 }
