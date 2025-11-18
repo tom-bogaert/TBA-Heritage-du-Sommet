@@ -6,7 +6,7 @@
       "description": "une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.",
       "exits": {
         "N": "cave",
-        "E": "tower",
+        "E": null,
         "S": "castle",
         "O": null
       }
@@ -18,7 +18,7 @@
         "N": "cottage",
         "E": null,
         "S": null,
-        "O": "forest"
+        "O": null
       }
     },
     "cave": {

@@ -54,7 +54,12 @@ class Actions:
             return False
 
         # Get the direction from the list of words.
-        direction = list_of_words[1]
+        direction = list_of_words[1].upper()
+        
+
+        if direction not in ["N","S","E","O"]:
+            print("Je ne comprends pas " + direction)
+            return False
         # Move the player in the direction specified by the parameter.
         player.move(direction)
         return True
