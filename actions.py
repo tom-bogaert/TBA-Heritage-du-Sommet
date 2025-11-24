@@ -2,6 +2,7 @@
 
 MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
+liste_acceptance = ( "NORD", "SOUTH", "EST", "OUEST", "UP", "DOWN" )
 
 from qte import QTE
 
@@ -58,22 +59,21 @@ class Actions:
             print(MSG1.format(command_word=command_word))
             return False
 
-        direction = list_of_words[1]
+        f_letter = list_of_words[1].upper()
+        if f_letter in liste_acceptance :
+            direction = f_letter[0]
+        else :
+            direction = f_letter
 
-        if (player.current_room.challenge is not None 
-            and not player.current_room.solved 
+        if (player.current_room.challenge is not None
             and direction == player.current_room.challenge_exit):
-            
-            print(f"\n🚫 Impossible d'aller vers {direction} en marchant.")
-            print("La paroi est trop technique.")
-            print("Utilisez la commande 'escalade' pour tenter de passer.\n")
-            return False
+            return Actions.climb(game, list_of_words, number_of_parameters)
 
 
         next_room = player.current_room.exits.get(direction)
 
         if next_room is None:
-            print("\nAucune porte dans cette direction !\n")
+            print("\Vous ne pouvez pas aller par là !\n")
             return False
 
         player.move(direction)
@@ -96,13 +96,6 @@ class Actions:
             print("\nIl n'y a rien de particulier à escalader ici. Vous pouvez marcher normalement.\n")
             return False
 
-        if current_room.solved:
-            print("\nVous avez déjà sécurisé cette voie. Vous pouvez vous déplacer librement.\n")
-            direction_sortie = current_room.challenge_exit
-            if direction_sortie and direction_sortie in current_room.exits:
-                player.move(direction_sortie)
-            return True
-
         config = current_room.challenge
         qte_climb = QTE(
             nb_tours=config.get("nb_tours", 3),
@@ -116,7 +109,6 @@ class Actions:
         reussite = qte_climb.start()
 
         if reussite:
-            current_room.solved = True
             print("\n--- PAROI FRANCHIS ---")
             print("Vous avez vaincu cet obstacle. Les sorties sont maintenant accessibles.")
             
