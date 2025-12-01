@@ -2,7 +2,7 @@
 
 MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
-liste_acceptance = set( "NORD", "SUD", "EST", "OUEST", "UP", "DOWN")
+liste_acceptance = set(["NORD", "SUD", "EST", "OUEST", "UP", "DOWN"])
 
 from qte import QTE
 
@@ -73,6 +73,7 @@ class Actions:
         next_room = player.current_room.exits.get(direction)
 
         if next_room is None:
+            print("\Vous ne pouvez pas aller par là !\n")
             if direction in liste_acceptance or direction in player.current_room.exits.keys() :
                 print(f"Prendre la direction '{str([i for i in liste_acceptance if str(i).startswith(direction)][0])}' est impossible !\n")
             else :
@@ -201,4 +202,42 @@ class Actions:
         for command in game.commands.values():
             print("\t- " + str(command))
         print()
+        return True
+    
+
+    def history(game, list_of_words, number_of_parameters):
+        """
+        Affiche la liste des lieux visités.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        print(game.player.get_history())
+        return True
+
+    def back(game, list_of_words, number_of_parameters):
+        """
+        Permet au joueur de revenir à la salle précédente.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        player = game.player
+
+        if not player.history:
+            print("\nImpossible de revenir en arrière : vous êtes au point de départ !\n")
+            return False
+        
+        previous_room = player.history.pop()
+        player.current_room = previous_room
+        
+        print("\n--- RETOUR ---")
+        print(player.get_history())
+
+        print(player.current_room.get_long_description())
+
         return True

@@ -23,12 +23,18 @@ class Game:
 
         help = Command("help", " : afficher cette aide", Actions.help, 0)
         self.commands["help"] = help
+        
         quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
         self.commands["quit"] = quit
+        
         go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
         self.commands["go"] = go
-        escalade = Command("escalade", " : Tenter de grimper la paroi (lance un QTE)", Actions.climb, 0)
-        self.commands["escalade"] = escalade
+
+        history_cmd = Command("history", " : afficher les lieux visités", Actions.history, 0)
+        self.commands["history"] = history_cmd
+        
+        back_cmd = Command("back", " : revenir au lieu précédent", Actions.back, 0)
+        self.commands["back"] = back_cmd
         
         salles_chargees, salle_depart = Chargement.charger_depuis_json(fichier_config_jeu)
         if not salles_chargees or not salle_depart:
