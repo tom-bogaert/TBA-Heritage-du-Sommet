@@ -1,0 +1,304 @@
+{
+  "start_room": "l1_camp_base",
+  "rooms": {
+    
+    "l1_mess": {
+      "name": "Mess des équipes",
+      "description": "L'air est saturé d'une odeur de café brûlé et de transpiration rance. D'autres équipes sont recroquevillées autour des réchauds, murmurant dans des langues étrangères. Personne ne vous regarde dans les yeux. L'ambiance est lourde, comme avant un orage.",
+      "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null }
+    },
+    "l1_glacier": {
+      "name": "Glacier (S)",
+      "description": "Vous quittez la sécurité relative du camp. Le vent vous gifle instantanément le visage. Devant vous, la langue de glace grise s'étend vers le haut, parsemée de rochers noirs. Le froid commence à mordre à travers vos gants.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": "l1_stock", "E": null, "S": null, "O": "l1_mess", "U": "l2_entree"},
+      "challenge_exit": "U"
+    },
+    "l1_camp_base": {
+      "name": "Camp de base (E)",
+      "description": "Une ville de toile éphémère posée sur la moraine. Les drapeaux de prière claquent violemment au vent. C'est votre point de départ, le dernier endroit sur terre où l'erreur est encore permise.",
+      "exits": { "N": null, "E": "l1_stock", "S": "l1_mess", "O": null }
+    },
+    "l1_stock": {
+      "name": "Zone de Stock",
+      "description": "Des piles de bidons bleus et de caisses renforcées forment un labyrinthe. Vivres, oxygène, cordes... Tout est là, froid et inerte, attendant d'être hissé vers la zone de mort.",
+      "exits": { "N": "l1_vue", "E": null, "S": "l1_glacier", "O": "l1_camp_base" }
+    },
+    "l1_vue": {
+      "name": "Point de vue Pégase",
+      "description": "Un promontoire rocheux offre une vue dégagée sur la face Sud. La montagne est titanesque, une paroi noire et blanche qui écrase le ciel. Vous vous sentez minuscule, presque insignifiant.",
+      "exits": { "N": null, "E": null, "S": "l1_stock", "O": null }
+    },
+
+
+    "l2_entree": {
+      "name": "Entrée Glacier (E)",
+      "description": "La glace devient chaotique. Le sol est une mosaïque de blocs instables. Chaque pas résonne d'un craquement sinistre en profondeur.",
+      "exits": { "N": "l2_pont", "E": "l2_serac", "S": "l1_glacier", "O": null }
+    },
+    "l2_serac": {
+      "name": "Sérac Instable",
+      "description": "Une tour de glace de la taille d'un immeuble penche dangereusement au-dessus de vous. Elle gémit sous la pression interne du glacier. Il ne faut pas traîner ici.",
+      "exits": { "N": "l2_moraine", "E": "l2_crevasse_noire", "S": null, "O": "l2_entree" }
+    },
+    "l2_crevasse_noire": {
+      "name": "(Crevasse)",
+      "description": "Une cicatrice béante dans le glacier. Le fond est invisible, plongé dans un bleu nuit absolu. L'air qui en remonte sent la poussière de glace vieille de mille ans. C'est une impasse mortelle.",
+      "exits": { "N": null, "E": null, "S": null, "O": "l2_serac" }
+    },
+    "l2_pont": {
+      "name": "Pont de Glace",
+      "description": "Une mince arche de neige enjambe le vide. Elle semble à peine assez solide pour supporter votre regard, encore moins votre poids.",
+      "exits": { "N": null, "E": "l2_moraine", "S": "l2_entree", "O": null }
+    },
+    "l2_moraine": {
+      "name": "Moraine Centrale",
+      "description": "Un îlot de gravats rocheux au milieu de l'enfer blanc. C'est un répit de stabilité sous vos pieds, mais le vent y est plus violent.",
+      "exits": { "N": null, "E": "l2_cimetiere", "S": "l2_serac", "O": "l2_pont" }
+    },
+    "l2_cimetiere": {
+      "name": "Cimetière Bouteilles",
+      "description": "Des centaines de bouteilles d'oxygène vides, rouillées ou éclatées, gisent ici à moitié ensevelies. Les déchets des expéditions passées, témoins silencieux de ceux qui ont réussi... ou échoué.",
+      "exits": { "N": "l2_camp_base_av", "E": null, "S": null, "O": "l2_moraine" }
+    },
+    "l2_camp_base_av": {
+      "name": "Camp Base Av. (S)",
+      "description": "Quelques tentes sont plantées au pied du grand mur. C'est ici que l'escalade verticale commence vraiment. L'atmosphère est fébrile.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": null, "E": null, "S": "l2_cimetiere", "O": null, "U": "l3_mur_entree"},
+      "challenge_exit": "U" 
+    },
+
+
+    "l3_mur_entree": {
+      "name": "Le Mur d'Entrée (E)",
+      "description": "La pente se redresse brutalement. Il n'y a plus de marche, seulement de l'escalade. La roche est froide et coupante comme du verre.",
+      "exits": { "N": "l3_diedre", "E": "l3_piolet", "S": "l2_camp_base_av", "O": null }
+    },
+    "l3_piolet": {
+      "name": "Le Piolet Rouge (Lore)",
+      "description": "Un vieux piolet en bois est coincé dans une fissure profonde. Une sangle rouge délavée y est encore attachée. Quelqu'un a dû l'abandonner pour survivre... ou il marque l'endroit d'une chute.",
+      "exits": { "N": "l3_cheminee", "E": null, "S": null, "O": "l3_mur_entree" }
+    },
+    "l3_diedre": {
+      "name": "Le Grand Dièdre",
+      "description": "La montagne forme un livre ouvert gigantesque. Vous grimpez dans la reliure, coincé entre deux murs de granit vertigineux.",
+      "exits": { "N": "l3_paroi_lisse", "E": "l3_cheminee", "S": "l3_mur_entree", "O": null }
+    },
+    "l3_cheminee": {
+      "name": "Cheminée Étroite",
+      "description": "Un boyau vertical et étouffant. Votre sac à dos frotte contre la roche. Il faut ramper vers le haut, centimètre par centimètre.",
+      "exits": { "N": "l3_camp1", "E": null, "S": "l3_piolet", "O": "l3_diedre" }
+    },
+    "l3_paroi_lisse": {
+      "name": "(Paroi Lisse)",
+      "description": "Le granit est poli comme du marbre. Aucune prise, aucune fissure. Vos crampons crissent inutilement sur la surface. Impossible de passer par là.",
+      "exits": { "N": null, "E": "l3_camp1", "S": "l3_diedre", "O": null }
+    },
+    "l3_camp1": {
+      "name": "Camp 1 (S)",
+      "description": "Une plateforme exiguë taillée dans la glace. Juste assez de place pour s'asseoir, les jambes pendantes dans le vide. Le vent hurle, mais vous pouvez enfin souffler.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": null, "E": null, "S": "l3_cheminee", "O": "l3_paroi_lisse", "U": "l4_camp1" },
+      "challenge_exit": "U"
+    },
+
+
+    "l4_crevasse": {
+      "name": "(Crevasse)",
+      "description": "Le sol s'est dérobé. Une faille camouflée par un pont de neige effondré. Regarder au fond donne la nausée.",
+      "exits": { "N": "l4_camp1", "E": "l4_dome", "S": null, "O": null }
+    },
+    "l4_dome": {
+      "name": "Le Dôme de Glace",
+      "description": "Une colline bombée, balayée par des rafales constantes. La glace est si dure que vos crampons y laissent à peine une trace.",
+      "exits": { "N": "l4_traversee", "E": "l4_camp1_5", "S": null, "O": "l4_crevasse" }
+    },
+    "l4_camp1_5": {
+      "name": "Camp 1.5 Abandonné",
+      "description": "Les restes d'une tente jaune, déchiquetée par les éléments. À l'intérieur, un sac de couchage gelé et une casserole cabossée. Une sensation de solitude absolue vous envahit.",
+      "exits": { "N": "l4_serac_menacant_2", "E": null, "S": null, "O": "l4_dome" }
+    },
+    "l4_camp1": {
+      "name": "Camp 1 (E)",
+      "description": "Vous êtes de retour au bivouac précaire. Le labyrinthe de séracs vous attend au-dessus.",
+      "exits": { "N": "l4_serac_menacant_1", "E": "l4_traversee", "S": "l4_crevasse", "O": null }
+    },
+    "l4_traversee": {
+      "name": "Traversée des Séracs",
+      "description": "Un dédale blanc. Tout autour de vous, des blocs de glace grands comme des maisons semblent en équilibre instable. Le silence est parfois brisé par un craquement de tonnerre.",
+      "exits": { "N": "l4_goulotte", "E": "l4_serac_menacant_2", "S": "l4_dome", "O": "l4_camp1" }
+    },
+    "l4_serac_menacant_2": {
+      "name": "(Sérac Menaçant)",
+      "description": "Ce bloc vibre sous l'effet du vent. Il va tomber, c'est une question de minutes. Reculez.",
+      "exits": { "N": "l4_plateau", "E": null, "S": "l4_camp1_5", "O": "l4_traversee" }
+    },
+    "l4_serac_menacant_1": {
+      "name": "(Sérac Menaçant)",
+      "description": "Un mur de glace surplombant bloque la voie. Des stalactites pointues comme des lances vous visent la tête.",
+      "exits": { "N": null, "E": "l4_goulotte", "S": "l4_camp1", "O": null }
+    },
+    "l4_goulotte": {
+      "name": "La Goulotte Noire",
+      "description": "Un couloir étroit et sombre encastré dans la montagne. La glace y est noire, sale, et incroyablement dure. C'est un toboggan vers la mort si vous glissez.",
+      "exits": { "N": null, "E": "l4_plateau", "S": "l4_traversee", "O": "l4_serac_menacant_1" }
+    },
+    "l4_plateau": {
+      "name": "Plateau du Vent (S)",
+      "description": "Vous émergez sur une étendue plate. Le vent n'est plus une rafale, c'est un mur solide qui vous pousse en arrière. Le bruit est assourdissant.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": null, "E": null, "S": "l4_serac_menacant_2", "O": "l4_goulotte", "U": "l5_plateau" },
+      "challenge_exit": "U"
+    },
+
+
+    "l5_plateau": {
+      "name": "Plateau du Vent (E)",
+      "description": "La traversée du plateau est un calvaire. Chaque pas demande une volonté de fer contre la tempête. Au loin, la paroi suivante se dresse.",
+      "exits": { "N": "l5_mur", "E": "l5_paroi_vierge_bas", "S": "l4_plateau", "O": null }
+    },
+    "l5_paroi_vierge_bas": {
+      "name": "(Paroi Vierge)",
+      "description": "Une dalle de roche nue balayée par les cristaux de glace. Aucune voie possible par ici.",
+      "exits": { "N": "l5_jardin", "E": null, "S": null, "O": "l5_plateau" }
+    },
+    "l5_mur": {
+      "name": "Mur Lisse (Escalade)",
+      "description": "Un passage technique. Il faut utiliser les pointes avant des crampons sur des grattons minuscules. Vos mollets brûlent.",
+      "exits": { "N": "l5_cheminee", "E": "l5_jardin", "S": "l5_plateau", "O": null }
+    },
+    "l5_jardin": {
+      "name": "Jardin Stalactites",
+      "description": "Un lieu d'une beauté mortelle. Des draperies de glace translucide pendent partout. C'est magnifique, mais fragile : si ça casse, vous tombez avec.",
+      "exits": { "N": "l5_camp2", "E": null, "S": "l5_paroi_vierge_bas", "O": "l5_mur" }
+    },
+    "l5_cheminee": {
+      "name": "Cheminée Hurlante",
+      "description": "Le vent s'engouffre dans cette faille comme dans un orgue géant. Le son ressemble à des hurlements humains. Vous essayez de ne pas écouter.",
+      "exits": { "N": null, "E": "l5_camp2", "S": "l5_mur", "O": null }
+    },
+    "l5_camp2": {
+      "name": "Camp 2 (S)",
+      "description": "Deux tentes arrimées à flanc de paroi. C'est le Camp 2. L'air commence à se raréfier sérieusement. Chaque geste prend trois fois plus de temps.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": null, "E": null, "S": "l5_jardin", "O": "l5_cheminee", "U": "l6_camp2" },
+      "challenge_exit": "U"
+    },
+
+
+    "l6_base": {
+      "name": "Base de la Pyramide",
+      "description": "La Pyramide Noire se dresse au-dessus de vous. Un mélange complexe de roche pourrie et de glace noire. C'est le verrou de la montagne.",
+      "exits": { "N": "l6_araignee", "E": "l6_nid", "S": null, "O": null }
+    },
+    "l6_nid_bas": {
+      "name": "Le Nid (Camp 3) (S)",
+      "description": "Vous apercevez l'emplacement du Camp 3, 'Le Nid d'Aigle', accroché désespérément plus haut. Il semble inatteignable.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": "l6_echo", "E": null, "S": null, "O": "l6_base", "U": "l7_nid" },
+      "challenge_exit": "U"
+      
+    },
+    "l6_araignee": {
+      "name": "L'Araignée (escalade)",
+      "description": "Un réseau de fissures qui oblige à grimper les quatre membres écartés, comme une araignée. L'exposition au vide est totale.",
+      "exits": { "N": "l6_camp2", "E": "l6_echo", "S": "l6_base", "O": null }
+    },
+    "l6_echo": {
+      "name": "L'Écho du Soviétique",
+      "description": "Votre radio crachote. Vous croyez entendre des voix russes, distinctes, paniquées. Puis le silence. Votre radio est éteinte depuis une heure...",
+      "exits": { "N": "l6_paroi", "E": null, "S": "l6_nid_bas", "O": "l6_araignee" }
+    },
+    "l6_camp2": {
+      "name": "Camp 2 (E)",
+      "description": "Retour au camp intermédiaire. La vue vers le haut est terrifiante.",
+      "exits": { "N": null, "E": "l6_paroi", "S": "l6_araignee", "O": null }
+    },
+    "l6_paroi": {
+      "name": "Paroi Vierge",
+      "description": "L'obscurité de la roche absorbe le faisceau de votre lampe frontale. Vous ne voyez pas où poser les pieds.",
+      "exits": { "N": null, "E": null, "S": "l6_echo", "O": "l6_camp2" }
+    },
+
+
+    "l7_nid": {
+      "name": "Le Nid (Camp 3) (E)",
+      "description": "Le dernier camp. À partir d'ici, vous entrez dans la Zone de Mort. Le corps ne se régénère plus, il se consume. Il faut monter ou mourir.",
+      "exits": { "N": "l7_balcon", "E": "l7_vide", "S": "l6_nid_bas", "O": null }
+    },
+    "l7_vide": {
+      "name": "(Vide)",
+      "description": "Un pas de trop à droite et c'est une chute de deux mille mètres. Le vide a une attraction magnétique.",
+      "exits": { "N": "l7_refuge", "E": null, "S": null, "O": "l7_nid" }
+    },
+    "l7_balcon": {
+      "name": "Le Balcon des Échos",
+      "description": "Vous croyez voir des silhouettes au coin de votre champ de vision. Quand vous tournez la tête, il n'y a que des rochers. L'hypoxie commence à jouer avec votre cerveau.",
+      "exits": { "N": "l7_paroi_lisse", "E": "l7_refuge", "S": "l7_nid", "O": null }
+    },
+    "l7_refuge": {
+      "name": "Refuge Zéro (Secret/Lore)",
+      "description": "Une petite grotte s'ouvre ici. À l'intérieur... c'est impossible. Il fait chaud. Une odeur de bois brûlé ? Non, c'est une hallucination. Il faut sortir avant de s'endormir pour toujours.",
+      "exits": { "N": "l7_veine", "E": null, "S": "l7_vide", "O": "l7_balcon" }
+    },
+    "l7_paroi_lisse": {
+      "name": "Paroi Lisse",
+      "description": "L'épuisement est tel que cette simple paroi lisse ressemble à une muraille infranchissable. Vos bras pèsent une tonne.",
+      "exits": { "N": null, "E": "l7_veine", "S": "l7_balcon", "O": null }
+    },
+    "l7_veine": {
+      "name": "La Veine Jaune (S)",
+      "description": "Une bande de calcaire jaune traverse la roche noire. C'est le fil d'Ariane vers le sommet. Suivez le jaune.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": null, "E": null, "S": "l7_refuge", "O": "l7_paroi_lisse", "U": "l8_veine_entree" },
+      "challenge_exit": "U"
+    },
+
+
+    "l8_veine_entree": {
+      "name": "La Veine Jaune (E)",
+      "description": "Vous êtes à plus de 8000 mètres. Chaque respiration est un combat. La veine jaune continue vers l'Est.",
+      "exits": { "N": null, "E": "l8_pegase", "S": null, "O": null }
+    },
+    "l8_pegase": {
+      "name": "Cadavre 'Pégase' (Lore)",
+      "description": "Il est assis là, le dos contre la paroi. Un alpiniste en combinaison orange vif, gelé depuis des années. Ses lunettes reflètent le vide. On l'appelle 'Pégase'. Il semble vous regarder passer.",
+      "exits": { "N": null, "E": "l8_goulot", "S": null, "O": "l8_veine_entree" }
+    },
+    "l8_goulot": {
+      "name": "Le Goulot d'Étranglement",
+      "description": "Le passage le plus terrifiant. Un couloir de glace vertical sous un immense sérac suspendu qui menace de lâcher à tout instant. Il faut passer vite. Très vite.",
+      "exits": { "N": null, "E": "l8_traversee", "S": null, "O": "l8_pegase" }
+    },
+    "l8_traversee": {
+      "name": "Traversée Finale",
+      "description": "Une traversée horizontale délicate vers l'arête. La neige est inconsistante, comme du sucre en poudre sur de la glace vive.",
+      "exits": { "N": null, "E": "l8_arete", "S": null, "O": "l8_goulot" }
+    },
+    "l8_arete": {
+      "name": "Arête Sommitale (S)",
+      "description": "Vous y êtes presque. L'arête est tranchante comme un couteau. À gauche, le Pakistan. À droite, la Chine. Au bout, le ciel.",
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "exits": { "N": null, "E": null, "S": null, "O": "l8_traversee", "U": "l9_sommet" },
+      "challenge_exit": "U"
+    },
+
+
+    "l9_sommet": {
+      "name": "Le Sommet",
+      "description": "8611m. Il n'y a plus rien au-dessus. L'horizon est courbe. Le monde est en bas, noyé sous les nuages. Vous pleurez, mais les larmes gèlent instantanément.",
+      "exits": { "N": null, "E": "l9_ciel", "S": "l8_arete", "O": null }
+    },
+    "l9_ciel": {
+      "name": "Le Ciel Noir",
+      "description": "En levant les yeux, vous réalisez que le ciel n'est pas bleu. Il est noir. Profond. L'espace s'ouvre juste au-dessus de votre tête.",
+      "exits": { "N": null, "E": "l9_locus", "S": null, "O": "l9_sommet" }
+    },
+    "l9_locus": {
+      "name": "LE LOCUS (Fin)",
+      "description": "Ce n'est pas une grotte, ni un sommet. C'est une singularité. Le vent s'est tu. Le temps ne semble plus s'écouler. Vous avez atteint la fin du voyage, là où la réalité de la montagne se dissout.",
+      "exits": { "N": null, "E": null, "S": null, "O": "l9_ciel" }
+    }
+  }
+}
