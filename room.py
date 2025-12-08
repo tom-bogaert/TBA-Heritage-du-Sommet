@@ -42,6 +42,7 @@ class Room:
         self.challenge = None
         self.challenge_exit = None
         self.solved = False
+        self.inventory = {}
     
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -64,3 +65,12 @@ class Room:
     # Return a long description of this room including exits.
     def get_long_description(self):
         return f"\n {self.description}\n\n{self.get_exit_string()}\n"
+
+    def get_inventory(self):
+        if not self.inventory:
+            return "Il n'y a aucun objet ici.\n"
+        
+        result = "\nObjets dans la pièce:\n"
+        for item in self.inventory.values():
+            result += f"  - {item}\n"
+        return result

@@ -40,6 +40,8 @@ class Player():
         self.name = name
         self.current_room = None
         self.history = []
+        self.inventory = {}
+        self.max_weight = 10.0
     
     # Define the move method.
     def move(self, direction):
@@ -68,3 +70,13 @@ class Player():
             result += f"        - {room.name}\n"
         return result
         
+
+
+    def get_inventory(self):
+        if not self.inventory:
+            return "Votre inventaire est vide.\n"
+        
+        result = "Vous disposez des items suivants :\n"
+        for item, _ in self.inventory.values():
+            result += f"    - {item}\n"
+        return result

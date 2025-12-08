@@ -1,5 +1,6 @@
 import json
 from room import Room
+from item import Item
 
 class Chargement:
     """
@@ -9,13 +10,6 @@ class Chargement:
 
     @classmethod
     def charger_depuis_json(cls, fichier_json: str):
-        """
-        Charge la configuration du jeu depuis un fichier JSON.
-        
-        Ce méthode lit le fichier, crée toutes les instances de Room,
-        lie leurs sorties, et retourne la liste des salles et
-        la salle de départ.
-        """
         try:
             with open(fichier_json, 'r', encoding='utf-8') as f:
                 data = json.load(f)
@@ -32,9 +26,16 @@ class Chargement:
         for room_id, room_data in data['rooms'].items():
             try:
                 new_room = Room(room_data['name'], room_data['description'])
+                
+                if 'items' in room_data:
+                    for item_data in room_data['items']:
+                        new_item = Item(item_data['name'], item_data['description'], item_data['weight'])
+                        new_room.inventory[new_item.name] = new_item
+                
                 salles_creees[room_id] = new_room
             except KeyError:
                 continue
+        
         for room_id, room_data in data['rooms'].items():
             if room_id not in salles_creees:
                 continue

@@ -73,7 +73,7 @@ class Actions:
         next_room = player.current_room.exits.get(direction)
 
         if next_room is None:
-            print("\Vous ne pouvez pas aller par là !\n")
+            print("Vous ne pouvez pas aller par là !\n")
             if direction in liste_acceptance or direction in player.current_room.exits.keys() :
                 print(f"Prendre la direction '{str([i for i in liste_acceptance if str(i).startswith(direction)][0])}' est impossible !\n")
             else :
@@ -217,9 +217,11 @@ class Actions:
         print(game.player.get_history())
         return True
 
+
     def back(game, list_of_words, number_of_parameters):
         """
         Permet au joueur de revenir à la salle précédente.
+        Les objets pris dans la salle actuelle sont redéposés.
         """
         l = len(list_of_words)
         if l != number_of_parameters + 1:
@@ -232,6 +234,21 @@ class Actions:
             print("\nImpossible de revenir en arrière : vous êtes au point de départ !\n")
             return False
         
+        # "Undo" item pickups from the room we are leaving
+        room_we_are_leaving = player.current_room
+        items_to_return = []
+        for item_name, (item, from_room) in player.inventory.items():
+            if from_room == room_we_are_leaving:
+                items_to_return.append(item_name)
+
+        if items_to_return:
+            print("\nEn revenant sur vos pas, vous redéposez les objets que vous veniez de prendre :")
+            for item_name in items_to_return:
+                item, _ = player.inventory[item_name]
+                room_we_are_leaving.inventory[item_name] = item
+                del player.inventory[item_name]
+                print(f"- {item_name}")
+
         previous_room = player.history.pop()
         player.current_room = previous_room
         
@@ -240,4 +257,89 @@ class Actions:
 
         print(player.current_room.get_long_description())
 
+        return True
+    
+
+    def look(game, list_of_words, number_of_parameters):
+        """
+        Affiche la description de la salle et son inventaire.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        print(game.player.current_room.get_long_description())
+        print(game.player.current_room.get_inventory())
+        return True
+
+
+    def check(game, list_of_words, number_of_parameters):
+        """
+        Affiche l'inventaire du joueur.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        print(game.player.get_inventory())
+        return True
+
+
+    def take(game, list_of_words, number_of_parameters):
+        """
+        Prend un objet dans la salle.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG1.format(command_word=list_of_words[0]))
+            return False
+        
+        item_name = list_of_words[1]
+        player = game.player
+        room = player.current_room
+
+        if item_name not in room.inventory:
+            print(f"\nL'objet '{item_name}' n'est pas ici.\n")
+            return False
+
+        item = room.inventory[item_name]
+
+        current_weight = sum(i.weight for i, _ in player.inventory.values())
+
+        if current_weight + item.weight > player.max_weight:
+            print(f"\nImpossible de prendre '{item_name}' : trop lourd ! (Poids actuel: {current_weight}kg / Max: {player.max_weight}kg)\n")
+            return False
+        
+        del room.inventory[item_name]
+        player.inventory[item_name] = (item, room)
+        
+        print(f"\nVous avez pris l'objet '{item_name}'.\n")
+        return True
+
+
+    def drop(game, list_of_words, number_of_parameters):
+        """
+        Pose un objet de l'inventaire dans la salle.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG1.format(command_word=list_of_words[0]))
+            return False
+        
+        item_name = list_of_words[1]
+        player = game.player
+        room = player.current_room
+
+        if item_name not in player.inventory:
+            print(f"\nVous ne possédez pas l'objet '{item_name}'.\n")
+            return False
+        
+        item, _ = player.inventory[item_name]
+
+        del player.inventory[item_name]
+        room.inventory[item_name] = item
+
+        print(f"\nVous avez déposé l'objet '{item_name}'.\n")
         return True

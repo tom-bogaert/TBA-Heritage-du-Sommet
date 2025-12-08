@@ -5,7 +5,11 @@
     "l1_mess": {
       "name": "Mess des équipes",
       "description": "L'air est saturé d'une odeur de café brûlé et de transpiration rance. D'autres équipes sont recroquevillées autour des réchauds, murmurant dans des langues étrangères. Personne ne vous regarde dans les yeux. L'ambiance est lourde, comme avant un orage.",
-      "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null }
+      "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null },
+      "items": [
+          { "name": "piolet", "description": "un piolet technique en acier trempé", "weight": 1.2 },
+          { "name": "corde", "description": "une corde d'escalade de 50m", "weight": 3.5 }
+      ]
     },
     "l1_glacier": {
       "name": "Glacier (S)",
