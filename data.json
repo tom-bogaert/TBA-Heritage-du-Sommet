@@ -26,7 +26,13 @@
     "l1_stock": {
       "name": "Zone de Stock",
       "description": "Des piles de bidons bleus et de caisses renforcées forment un labyrinthe. Vivres, oxygène, cordes... Tout est là, froid et inerte, attendant d'être hissé vers la zone de mort.",
-      "exits": { "N": "l1_vue", "E": null, "S": "l1_glacier", "O": "l1_camp_base" }
+      "exits": { "N": "l1_vue", "E": null, "S": "l1_glacier", "O": "l1_camp_base" },
+      "items": [
+          {"name": "barre protéinée",
+          "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
+          "weight": 0.3}
+      ]
+      
     },
     "l1_vue": {
       "name": "Point de vue Pégase",
@@ -87,7 +93,12 @@
     "l3_diedre": {
       "name": "Le Grand Dièdre",
       "description": "La montagne forme un livre ouvert gigantesque. Vous grimpez dans la reliure, coincé entre deux murs de granit vertigineux.",
-      "exits": { "N": "l3_paroi_lisse", "E": "l3_cheminee", "S": "l3_mur_entree", "O": null }
+      "exits": { "N": "l3_paroi_lisse", "E": "l3_cheminee", "S": "l3_mur_entree", "O": null },
+      "items": [
+          {"name": "barre protéinée",
+          "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
+          "weight": 0.3}
+      ]
     },
     "l3_cheminee": {
       "name": "Cheminée Étroite",
@@ -121,7 +132,12 @@
     "l4_camp1_5": {
       "name": "Camp 1.5 Abandonné",
       "description": "Les restes d'une tente jaune, déchiquetée par les éléments. À l'intérieur, un sac de couchage gelé et une casserole cabossée. Une sensation de solitude absolue vous envahit.",
-      "exits": { "N": "l4_serac_menacant_2", "E": null, "S": null, "O": "l4_dome" }
+      "exits": { "N": "l4_serac_menacant_2", "E": null, "S": null, "O": "l4_dome" },
+      "items": [
+          {"name": "barre protéinée",
+          "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
+          "weight": 0.3}
+      ]
     },
     "l4_camp1": {
       "name": "Camp 1 (E)",
@@ -165,7 +181,12 @@
     "l5_paroi_vierge_bas": {
       "name": "(Paroi Vierge)",
       "description": "Une dalle de roche nue balayée par les cristaux de glace. Aucune voie possible par ici.",
-      "exits": { "N": "l5_jardin", "E": null, "S": null, "O": "l5_plateau" }
+      "exits": { "N": "l5_jardin", "E": null, "S": null, "O": "l5_plateau" },
+      "items": [
+          {"name": "barre protéinée",
+          "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
+          "weight": 0.3}
+      ]
     },
     "l5_mur": {
       "name": "Mur Lisse (Escalade)",
