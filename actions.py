@@ -79,7 +79,7 @@ class Actions:
             else :
                 print("Cette direction '" + str(direction) + "' est inconnu !\n")
             return False
-
+        
         player.move(direction)
         return True
 
@@ -234,7 +234,6 @@ class Actions:
             print("\nImpossible de revenir en arrière : vous êtes au point de départ !\n")
             return False
         
-        # "Undo" item pickups from the room we are leaving
         room_we_are_leaving = player.current_room
         items_to_return = []
         for item_name, (item, from_room) in player.inventory.items():
@@ -258,6 +257,32 @@ class Actions:
         print(player.current_room.get_long_description())
 
         return True
+    
+
+    def talk(game, list_of_words, number_of_parameters):
+        """
+        Permet de discuter avec un PNJ présent dans la salle.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG1.format(command_word=list_of_words[0]))
+            return False
+        
+        npc_name = list_of_words[1]
+        current_room = game.player.current_room
+        
+        found_npc = None
+        for name, npc in current_room.characters.items():
+            if name.lower() == npc_name.lower():
+                found_npc = npc
+                break
+        
+        if found_npc:
+            print(f"\n{found_npc.name} dit : \"{found_npc.get_msg()}\"\n")
+            return True
+        else:
+            print(f"\nIl n'y a personne du nom de '{npc_name}' ici.\n")
+            return False
     
 
     def look(game, list_of_words, number_of_parameters):
