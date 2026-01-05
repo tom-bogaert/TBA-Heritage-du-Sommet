@@ -1,5 +1,9 @@
 import random
 
+
+DEBUG = True
+
+
 class Character:
     def __init__(self, name, description, current_room, msgs):
         self.name = name
@@ -26,8 +30,13 @@ class Character:
                 self.current_room = next_room
                 
                 self.current_room.characters[self.name] = self
+
+                if DEBUG :
+                    print(str(self.name) + " se déplace dans " + str(self.current_room.name))
+
                 
                 return True
+        
         return False
 
     def get_msg(self):

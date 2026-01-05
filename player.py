@@ -34,8 +34,7 @@ class Player():
         >>> p.current_room.name
         'Arrivée'
     """
-
-    # Define the constructor.
+class Player():
     def __init__(self, name):
         self.name = name
         self.current_room = None
@@ -43,40 +42,30 @@ class Player():
         self.inventory = {}
         self.max_weight = 10.0
     
-    # Define the move method.
     def move(self, direction):
-        # Get the next room from the exits dictionary of the current room.
         next_room = self.current_room.exits[direction]
-
-        # If the next room is None, print an error message and return False.
         if next_room is None:
             print("\nAucune porte dans cette direction !\n")
             return False
         
         self.history.append(self.current_room)
-        
-        # Set the current room to the next room.
         self.current_room = next_room
         print(self.current_room.get_long_description())
         return True
 
-
     def get_history(self):
         if not self.history:
             return "\nVous n'avez visité aucune autre zone.\n"
-        
         result = "\nVous avez déjà visité les zones suivantes:\n"
         for room in self.history:
             result += f"        - {room.name}\n"
         return result
-        
-
 
     def get_inventory(self):
         if not self.inventory:
             return "Votre inventaire est vide.\n"
-        
         result = "Vous disposez des items suivants :\n"
         for item, _ in self.inventory.values():
             result += f"    - {item}\n"
         return result
+    
