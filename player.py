@@ -41,7 +41,8 @@ class Player():
         self.history = []
         self.inventory = {}
         self.max_weight = 10.0
-    
+        self.rewards = []
+
     def move(self, direction):
         next_room = self.current_room.exits[direction]
         if next_room is None:
@@ -68,4 +69,7 @@ class Player():
         for item, _ in self.inventory.values():
             result += f"    - {item}\n"
         return result
-    
+
+    def add_reward(self, reward):
+        self.rewards.append(reward)
+        print(f"(Récompense '{reward}' ajoutée à votre profil)")

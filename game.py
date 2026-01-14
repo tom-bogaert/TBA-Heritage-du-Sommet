@@ -32,6 +32,8 @@ class Game:
         self.commands["escalade"] = Command("escalade", " : Tenter de grimper (QTE)", Actions.climb, 0)
         
 
+        self.commands["quests"] = Command("quests", " : afficher le journal des quêtes", Actions.quests, 0)
+
         fichier_config_jeu = "data.json"
         salles_chargees, salle_depart = Chargement.charger_depuis_json(fichier_config_jeu)
         
@@ -43,8 +45,33 @@ class Game:
         self.rooms = salles_chargees
         self.player = Player(input("\nEntrez votre nom: "))
         self.player.current_room = salle_depart
+
+        q1 = Quest(
+            "Sécurité avant tout", 
+            "Trouver un piolet au Mess pour pouvoir aller sur le glacier.", 
+            "TAKE_piolet", 
+            "Maîtrise du piolet (+Skill)"
+        )
         
-        guide = Character("Sherpa", "Un guide expérimenté.", salle_depart, ["Attention aux crevasses.", "Holala !"])
+        q2 = Quest(
+            "Première Ascension",
+            "Grimper la première paroi pour atteindre l'Entrée du Glacier.",
+            "MOVE_Entrée Glacier (E)", 
+            "Acclimatation (+Endurance)"
+        )
+
+        q3 = Quest(
+            "Le toit du monde", 
+            "Atteindre le sommet de la montagne.", 
+            "MOVE_Le Sommet",
+            "Gloire éternelle"
+        )
+        
+        self.quest_manager.add_quest(q1)
+        self.quest_manager.add_quest(q2)
+        self.quest_manager.add_quest(q3)
+        
+        guide = Character("Sherpa", "Un guide expérimenté.", salle_depart, ["Attention aux crevasses.", "Prends le piolet !"])
         
         self.npcs = []
         for room in self.rooms:
@@ -54,16 +81,17 @@ class Game:
 
     def check_win(self):
         if self.quest_manager.all_finished():
-            print("\n🏆 VICTOIRE ! Vous avez complété toutes les préparations !")
+            print("\n🏆 VICTOIRE ABSOLUE ! Vous avez conquis la montagne et rempli tous vos objectifs !")
             self.finished = True
             return True
         return False
 
     def check_loose(self):
-        current_room_id = self.player.current_room.name
+        current_room_name = self.player.current_room.name
         
-        if current_room_id == "Glacier (S)" and "piolet" not in self.player.inventory:
+        if current_room_name == "Glacier (S)" and "piolet" not in self.player.inventory:
             print("\n💀 DÉFAITE : Vous avez glissé sur le glacier sans piolet pour vous retenir.")
+            print("Votre corps glisse vers la crevasse...")
             self.finished = True
             return True
         return False
@@ -76,8 +104,7 @@ class Game:
         
         while not self.finished:
             if self.check_loose(): break
-            if self.check_win(): break
-
+            
             ancienne_salle = self.player.current_room
             
             self.process_command(input("> "))
@@ -87,9 +114,9 @@ class Game:
                 self.quest_manager.check_events(event_move, self.player)
                 
                 for npc in self.npcs:
-                    moved = npc.move()
-                    if DEBUG and moved:
-                        pass
+                    npc.move()
+            
+            if self.check_win(): break
 
         return None
 
