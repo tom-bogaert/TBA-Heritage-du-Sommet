@@ -312,9 +312,19 @@ class Actions:
         return True
 
 
+    def quests(game, list_of_words, number_of_parameters):
+        """Affiche les quêtes en cours."""
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+        
+        print(game.quest_manager.get_status())
+        return True
+
     def take(game, list_of_words, number_of_parameters):
         """
-        Prend un objet dans la salle.
+        Prend un objet dans la salle et vérifie les quêtes.
         """
         l = len(list_of_words)
         if l != number_of_parameters + 1:
@@ -330,19 +340,22 @@ class Actions:
             return False
 
         item = room.inventory[item_name]
-
         current_weight = sum(i.weight for i, _ in player.inventory.values())
 
         if current_weight + item.weight > player.max_weight:
-            print(f"\nImpossible de prendre '{item_name}' : trop lourd ! (Poids actuel: {current_weight}kg / Max: {player.max_weight}kg)\n")
+            print(f"\nImpossible de prendre '{item_name}' : trop lourd !\n")
             return False
         
         del room.inventory[item_name]
         player.inventory[item_name] = (item, room)
         
         print(f"\nVous avez pris l'objet '{item_name}'.\n")
-        return True
 
+        event_code = f"TAKE_{item_name}"
+        game.quest_manager.check_events(event_code, player)
+        
+        return True
+    
 
     def drop(game, list_of_words, number_of_parameters):
         """
