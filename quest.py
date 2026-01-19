@@ -47,3 +47,11 @@ class QuestManager:
         for q in self.quests:
             res += str(q) + "\n"
         return res
+    
+    def get_quest_details(self, quest_title):
+        """Retourne les détails d'une quête spécifique"""
+        for q in self.quests:
+            if q.title.lower() == quest_title.lower():
+                status = "Terminée" if q.completed else "En cours"
+                return f"\n--- DÉTAILS DE LA QUÊTE ---\nTitre : {q.title}\nDescription : {q.description}\nStatut : {status}\nRécompense : {q.reward}\n"
+        return f"Aucune quête trouvée avec le titre '{quest_title}'."

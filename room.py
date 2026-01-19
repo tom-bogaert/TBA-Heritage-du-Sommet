@@ -65,7 +65,7 @@ class Room:
 
     # Return a long description of this room including exits.
     def get_long_description(self):
-        return f"\n {self.description}\n\n{self.get_exit_string()}\n"
+        return f"\n{self.name} :\n {self.description}\n\n{self.get_exit_string()}\n"
 
     def get_inventory(self):
         result = ""

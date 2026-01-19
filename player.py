@@ -72,4 +72,3 @@ class Player():
 
     def add_reward(self, reward):
         self.rewards.append(reward)
-        print(f"(Récompense '{reward}' ajoutée à votre profil)")
