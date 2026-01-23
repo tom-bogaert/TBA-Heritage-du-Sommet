@@ -24,7 +24,7 @@
     },
     "l1_camp_base": {
       "name": "Camp de base (E)",
-      "image":null,
+      "image": "Mess_des_quipes_montagne.png",
       "description": "Une ville de toile éphémère posée sur la moraine. Les drapeaux de prière claquent violemment au vent. C'est votre point de départ, le dernier endroit sur terre où l'erreur est encore permise.",
       "exits": { "N": null, "E": "l1_stock", "S": "l1_mess", "O": null }
     },
