@@ -81,6 +81,8 @@ class Actions:
             return False
         
         player.move(direction)
+        if player.loose_heat_to_death():
+            game.finished = True
         return True
 
 
@@ -101,7 +103,9 @@ class Actions:
             return False
 
         config = current_room.challenge
+        
         qte_climb = QTE(
+            game,  # <--- Ajout de l'argument game
             nb_tours=config.get("nb_tours", 3),
             min_inputs=config.get("min_inputs", 2),
             max_inputs=config.get("max_inputs", 4),

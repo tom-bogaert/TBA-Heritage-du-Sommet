@@ -42,6 +42,11 @@ class Player():
         self.inventory = {}
         self.max_weight = 10.0
         self.rewards = []
+        self.energy = 100
+        self.mental_health = 100
+        self.heat = 100
+        self.difficulty = 1
+
 
     def move(self, direction):
         next_room = self.current_room.exits[direction]
@@ -73,3 +78,12 @@ class Player():
     def add_reward(self, reward):
         self.rewards.append(reward)
         print(f"(Récompense '{reward}' ajoutée à votre profil)")
+
+    def loose_heat_to_death(self):
+        self.heat -= self.difficulty * 2
+        if self.heat < 0:
+            self.heat = 0
+            print("\n💀 DÉFAITE : Vous êtes mort de froid.")
+            print("Votre corps resteras congelé ici jusqu'as la fin des temps...")
+            return True
+        return False
