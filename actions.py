@@ -283,6 +283,8 @@ class Actions:
         
         if found_npc:
             print(f"\n{found_npc.name} dit : \"{found_npc.get_msg()}\"\n")
+            event_code = f"TALK_{found_npc.name}"
+            game.quest_manager.check_events(event_code, game.player)
             return True
         else:
             print(f"\nIl n'y a personne du nom de '{npc_name}' ici.\n")
@@ -324,6 +326,19 @@ class Actions:
             return False
         
         print(game.quest_manager.get_status())
+        return True
+    
+    def quest(game, list_of_words, number_of_parameters):
+        """Affiche les détails d'une quête."""
+        l = len(list_of_words)
+        print(l)
+        print(number_of_parameters)
+        if l != number_of_parameters + 1:
+            print(MSG0.format(command_word=list_of_words[0]))
+            return False
+
+        quest_name = list_of_words[1]
+        print(game.quest_manager.get_quest_details(quest_name))
         return True
 
     def take(game, list_of_words, number_of_parameters):

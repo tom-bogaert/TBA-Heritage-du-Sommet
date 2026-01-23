@@ -77,7 +77,6 @@ class Player():
 
     def add_reward(self, reward):
         self.rewards.append(reward)
-        print(f"(Récompense '{reward}' ajoutée à votre profil)")
 
     def loose_heat_to_death(self):
         self.heat -= self.difficulty * 2
@@ -87,3 +86,4 @@ class Player():
             print("Votre corps resteras congelé ici jusqu'as la fin des temps...")
             return True
         return False
+

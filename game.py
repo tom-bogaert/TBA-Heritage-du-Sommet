@@ -40,6 +40,7 @@ class Game:
         self.commands["escalade"] = Command("escalade", " : Tenter de grimper (QTE)", Actions.climb, 0)
         
         self.commands["quests"] = Command("quests", " : afficher le journal des quêtes", Actions.quests, 0)
+        self.commands["quest"] = Command("quest", " <nom> : afficher les détails d'une quête", Actions.quest, 1)
 
         fichier_config_jeu = "data.json"
         salles_chargees, salle_depart = Chargement.charger_depuis_json(fichier_config_jeu)
@@ -59,30 +60,38 @@ class Game:
         self.player.current_room = salle_depart
 
         q1 = Quest(
-            "Sécurité avant tout", 
+            "Sécurité_avant_tout", 
             "Trouver un piolet au Mess pour pouvoir aller sur le glacier.", 
             "TAKE_piolet", 
             "Maîtrise du piolet (+Skill)"
         )
         
         q2 = Quest(
-            "Première Ascension",
+            "Première_Ascension",
             "Grimper la première paroi pour atteindre l'Entrée du Glacier.",
             "MOVE_Entrée Glacier (E)", 
             "Acclimatation (+Endurance)"
         )
 
         q3 = Quest(
-            "Le toit du monde", 
+            "Le_toit_du_monde", 
             "Atteindre le sommet de la montagne.", 
-            "MOVE_Le Sommet",
+            "MOVE_LE LOCUS (Fin)",
             "Gloire éternelle"
+        )
+
+        q4 = Quest(
+            "Bienvenue", 
+            "Parler au Sherpa", 
+            "TALK_Sherpa",
+            "Informations sur la montagne"
         )
         
         self.quest_manager.add_quest(q1)
         self.quest_manager.add_quest(q2)
         self.quest_manager.add_quest(q3)
-        
+        self.quest_manager.add_quest(q4)
+
         guide = Character("Sherpa", "Un guide expérimenté.", salle_depart, ["Attention aux crevasses.", "Prends le piolet !"])
         
         self.npcs = []
