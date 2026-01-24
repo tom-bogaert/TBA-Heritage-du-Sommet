@@ -106,11 +106,13 @@ class Game:
             if hasattr(nouvelle_salle, 'danger') and nouvelle_salle.danger:
                 infos = nouvelle_salle.danger
                 print(f"\n|⚠️  ZONE DANGEREUSE : {nouvelle_salle.name}")
+
+                item_mod = self.player.get_passive_modifier("d_difficulty")
                 
                 epreuve = EpreuveDanger(self, 
                                       rows=infos.get("rows", 6), 
                                       cols=infos.get("cols", 6), 
-                                      mines=infos.get("mines", 5))
+                                      mines=infos.get("mines", 5)*item_mod)
                 
                 reussite = epreuve.start()
                 
@@ -170,6 +172,7 @@ class Game:
         else:
             command = self.commands[command_word]
             command.action(self, list_of_words, command.number_of_parameters)
+            
 
     def print_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")

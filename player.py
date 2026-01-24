@@ -54,7 +54,7 @@ class Player():
 
 
     def move(self, direction):
-        next_room = self.current_room.exits[direction]
+        next_room = self.current_room.exits.get(direction)
         if next_room is None:
             print("\n|Aucune porte dans cette direction !\n")
             return False
@@ -85,7 +85,7 @@ class Player():
 
     def loose_heat_to_death(self):
         coeff = self.get_passive_modifier("h_coeff_damage")
-        self.heat -= (self.difficulty * 2) * self.h_coeff_damage * coeff
+        self.heat -= (self.d_difficulty * 2) * self.h_coeff_damage * coeff
         if self.heat < 0:
             self.heat = 0
             print("\|n💀 DÉFAITE : Vous êtes mort de froid.")
@@ -94,7 +94,7 @@ class Player():
         return False
     
     def player_luck(self):
-        return (random.random()*self.difficulty)+1
+        return (random.random()*self.d_difficulty)+1
 
 
     def get_passive_modifier(self, stat_name):
