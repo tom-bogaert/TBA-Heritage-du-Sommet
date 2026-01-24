@@ -334,9 +334,4 @@ class QTE:
         self.lbl_info.config(text="--- CHUTE ! ---", fg="red")
         self.gui_success = False
         self.current_sequence = []
-        if self.game.player.energy > 15 :
-            self.game.player.energy-=15
-        else:
-            self.game.player.energy=0
-            self.game.finished = True
         self.top.after(2000, self.top.destroy)

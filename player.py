@@ -85,13 +85,28 @@ class Player():
 
     def loose_heat_to_death(self):
         coeff = self.get_passive_modifier("h_coeff_damage")
-        self.heat -= (self.d_difficulty * 2) * self.h_coeff_damage * coeff
+        self.heat -= 8 * self.h_coeff_damage * coeff
         if self.heat < 0:
             self.heat = 0
             print("\|n💀 DÉFAITE : Vous êtes mort de froid.")
             print("|Votre corps resteras congelé ici jusqu'as la fin des temps...")
             return True
         return False
+    
+    def loose_energy_to_death(self, value):
+        coeff = self.get_passive_modifier("e_coeff_damage")
+        real_damage = value * self.e_coeff_damage * coeff
+        
+        self.energy -= real_damage
+        print(f"|💔 Vous perdez {int(real_damage)} points d'énergie.")
+
+        if self.energy <= 0:
+            self.energy = 0
+            print("\n|💀 DÉFAITE : Vous êtes mort de fatigue/blessures.")
+            print("|Votre corps est resté aplati contre le sol...")
+            return True
+        return False
+
     
     def player_luck(self):
         return (random.random()*self.d_difficulty)+1
@@ -102,6 +117,6 @@ class Player():
         modifier = 1.0
         for item, _ in self.inventory.values():
             if hasattr(item, 'effect') and item.effect:
-                if item.effect.get("type") == "passive" and item.effect.get("variable") == stat_name:
+                if item.effect.get("type") == "passif" and item.effect.get("variable") == stat_name:
                     modifier *= item.effect.get("value", 1.0)
         return modifier

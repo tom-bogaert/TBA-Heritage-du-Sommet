@@ -96,7 +96,7 @@ class Actions:
 
         config = current_room.challenge
         item_mod = player.get_passive_modifier("q_difficulty")
-        total_diff = player.difficulty * item_mod
+        total_diff = player.q_difficulty * item_mod
         
         qte_climb = QTE(
             game,  
@@ -123,6 +123,9 @@ class Actions:
             print("\n|--- ÉCHEC ---")
             print("|Vous dévissez et vous retrouvez au pied de la paroi.")
             print("|Il faut réessayer pour passer.")
+            
+            if player.loose_energy_to_death(15):
+                game.finished = True
         
         return True
 

@@ -162,7 +162,6 @@ class EpreuveDanger:
         self.is_game_over = True
         self.success = False
         
-        # Révéler toutes les mines
         for (r, c), data in self.buttons.items():
             if data["is_mine"]:
                 bg_color = self.COLOR_CREVASSE

@@ -121,12 +121,8 @@ class Game:
                     nouvelle_salle.danger = None
                 else:
                     print("💥 CRACK ! La glace cède sous vos pieds !")
-                    passive_e = self.player.get_passive_modifier("e_coeff_damage")
-                    base_degats = 25
-                    degats_finaux = base_degats * self.player.e_coeff_damage * passive_e
-                    
-                    self.player.energy -= degats_finaux
-                    print(f"|Vous perdez {int(degats_finaux)} points d'énergie.")
+                    if self.player.loose_energy_to_death(25):
+                        self.finished = True
 
         if self.check_loose(): return
         self.check_win()
