@@ -47,7 +47,8 @@ class Player():
         self.energy = 100
         self.mental_health = 100
         self.heat = 100
-        self.difficulty = 1.0
+        self.q_difficulty = 1.0
+        self.d_difficulty = 1.0
         self.e_coeff_damage = 1.0
         self.h_coeff_damage = 1.0
 

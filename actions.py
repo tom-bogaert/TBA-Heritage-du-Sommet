@@ -95,7 +95,7 @@ class Actions:
             return False
 
         config = current_room.challenge
-        item_mod = player.get_passive_modifier("difficulty")
+        item_mod = player.get_passive_modifier("q_difficulty")
         total_diff = player.difficulty * item_mod
         
         qte_climb = QTE(
@@ -103,7 +103,7 @@ class Actions:
             nb_tours=int(config.get("nb_tours", 3) * total_diff),
             min_inputs=int(config.get("min_inputs", 2) * total_diff),
             max_inputs=int(config.get("max_inputs", 4) * total_diff),
-            temps_reaction=config.get("time", 2.0) / total_diff,
+            temps_reaction=config.get("time", 2.0),
             pool_lettres=config.get("pool", "AZERTY")
         )
         
