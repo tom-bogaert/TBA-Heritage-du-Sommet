@@ -26,11 +26,12 @@ class Chargement:
 
         for room_id, room_data in data['rooms'].items():
             try:
-                new_room = Room(room_data['name'], room_data['description'])
-
                 nom_image = room_data.get('image') 
                 new_room = Room(room_data['name'], room_data['description'], nom_image)
                 
+                if 'danger' in room_data:
+                    new_room.danger = room_data['danger']
+
                 if 'items' in room_data:
                     for item_data in room_data['items']:
                         new_item = Item(item_data['name'], item_data['description'], item_data['weight'])

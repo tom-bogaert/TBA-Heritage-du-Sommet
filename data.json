@@ -31,6 +31,11 @@
     "l1_stock": {
       "name": "Zone de Stock",
       "image":"l1_stock.jpeg",
+      "danger": {
+            "rows": 6,
+            "cols": 6,
+            "mines": 9
+        },
       "description": "Des piles de bidons bleus et de caisses renforcées forment un labyrinthe. Vivres, oxygène, cordes... Tout est là, froid et inerte, attendant d'être hissé vers la zone de mort.",
       "exits": { "N": "l1_vue", "E": null, "S": "l1_glacier", "O": "l1_camp_base" },
       "items": [
