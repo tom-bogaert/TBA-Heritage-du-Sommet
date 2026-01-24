@@ -360,10 +360,14 @@ class GameGUI(tk.Tk):
 
     def _send_command(self, command):
         if self.game.finished: return
+        ancienne_salle = self.game.player.current_room 
+        
         self.last_command = command
         print(f"\n> {command}")
         self.game.process_command(command)
+        self.game.update_after_turn(ancienne_salle)
         self._update_interface()
+        
         if self.game.finished:
             self.entry.configure(state="disabled")
             self.after(2000, self._on_close)

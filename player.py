@@ -1,4 +1,6 @@
 # Define the Player class.
+import random
+
 class Player():
     """
     Cette classe représente le joueur.
@@ -45,7 +47,7 @@ class Player():
         self.energy = 100
         self.mental_health = 100
         self.heat = 100
-        self.difficulty = 1
+        self.difficulty = 1.0
 
 
     def move(self, direction):
@@ -86,4 +88,6 @@ class Player():
             print("Votre corps resteras congelé ici jusqu'as la fin des temps...")
             return True
         return False
-
+    
+    def player_luck(self):
+        return (random.random()*self.difficulty)+1

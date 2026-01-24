@@ -5,9 +5,8 @@ from actions import Actions
 from chargement import Chargement
 from character import Character
 from quest import Quest, QuestManager
+from epreuve_danger import EpreuveDanger 
 import sys
-
-# DEBUG = True
 
 class Game:
 
@@ -52,6 +51,7 @@ class Game:
         self.player = Player(player_name)
         self.player.current_room = salle_depart
 
+        # --- QUÊTES ---
         q1 = Quest("Sécurité_avant_tout", "Trouver un piolet au Mess.", "TAKE_piolet", "Maîtrise du piolet")
         q2 = Quest("Première_Ascension", "Grimper la première paroi.", "MOVE_Entrée Glacier (E)", "Acclimatation")
         q3 = Quest("Le_toit_du_monde", "Atteindre le sommet.", "MOVE_LE LOCUS (Fin)", "Gloire éternelle")
@@ -62,7 +62,14 @@ class Game:
         self.quest_manager.add_quest(q3)
         self.quest_manager.add_quest(q4)
 
-        Character("Sherpa", "Un guide expérimenté.", salle_depart, ["Attention aux crevasses.", "Prends le piolet !"])
+        # --- PNJs ---
+        dialogues_sherpa = [
+            "Namaste. La montagne nous observe. Ne l'insulte pas en partant les mains nues. Ce glacier est plus dur que l'acier. Sans un bon PIOLET, tu ne passeras pas le premier mur. Va au Mess, trouves-en un.",
+            "L'ascension n'est pas une marche continue, c'est un escalier de géants. À chaque palier d'altitude, un mur vertical te barrera la route. Tu devras grimper ces parois pour t'élever vers l'air raréfié.",
+            "Écoute bien : plus haut, le sol devient traître. Tu entreras dans des ZONES DE DANGERS. Là-bas, ne cours pas. Tu dois SONDER LA GLACE pour révéler les failles cachées. Identifie les passages sûrs avant de poser le pied, ou la montagne t'avalera."
+        ]
+        
+        Character("Sherpa", "Un vieux guide au visage brûlé par le soleil et le vent.", salle_depart, dialogues_sherpa)
 
         self.npcs = []
         for room in self.rooms:
@@ -77,41 +84,89 @@ class Game:
         return False
 
     def check_loose(self):
-        current_room_name = self.player.current_room.name
-        if current_room_name == "Glacier (S)" and "piolet" not in self.player.inventory:
-            print("\n💀 DÉFAITE : Vous avez glissé sur le glacier sans piolet.")
+        if self.player.energy <= 0:
+            print("\n💀 DÉFAITE : Vous n'avez plus d'énergie pour continuer.")
             self.finished = True
             return True
         return False
 
+    def update_after_turn(self, ancienne_salle):
+        """Méthode appelée par la GUI après chaque action."""
+        
+        if self.player.current_room != ancienne_salle:
+            nouvelle_salle = self.player.current_room
+            
+            event_move = f"MOVE_{nouvelle_salle.name}"
+            self.quest_manager.check_events(event_move, self.player)
+            
+            for npc in self.npcs:
+                npc.move()
+
+            if hasattr(nouvelle_salle, 'danger') and nouvelle_salle.danger:
+                infos = nouvelle_salle.danger
+                print(f"\n⚠️  ZONE DANGEREUSE : {nouvelle_salle.name}")
+                
+                epreuve = EpreuveDanger(self, 
+                                      rows=infos.get("rows", 6), 
+                                      cols=infos.get("cols", 6), 
+                                      mines=infos.get("mines", 5))
+                
+                reussite = epreuve.start()
+                
+                if reussite:
+                    print("✅ Vous avez traversé la zone dangereuse sans encombre.")
+                    nouvelle_salle.danger = None
+                else:
+                    print("💥 CRACK ! La glace cède sous vos pieds !")
+                    degats = 25
+                    self.player.energy -= degats
+                    print(f"Vous perdez {degats} points d'énergie.")
+                    
+                    if self.gui:
+                        self.gui.var_energy.set(self.player.energy)
+                        
+                    if self.player.energy <= 0:
+                        print("💀 Le froid et les blessures ont eu raison de vous.")
+                        self.finished = True
+
+        if self.check_loose(): return
+        self.check_win()
+
     def play(self):
+        """Boucle principale pour le mode Console uniquement."""
         self.setup()
         if self.finished: return
-            
         self.print_welcome()
         
         while not self.finished:
-            if self.check_loose(): break
-            
             ancienne_salle = self.player.current_room
             self.process_command(input("> "))
-            
-            if self.player.current_room != ancienne_salle:
-                event_move = f"MOVE_{self.player.current_room.name}"
-                self.quest_manager.check_events(event_move, self.player)
-                for npc in self.npcs:
-                    npc.move()
-            
-            if self.check_win(): break
+            self.update_after_turn(ancienne_salle)
 
     def process_command(self, command_string) -> None:
+        """Traite la commande entrée par le joueur."""
         stripped_input = command_string.strip()
-        if not stripped_input:
-            print() 
-            return
+        if not stripped_input: return
+        
+        list_of_words = stripped_input.split()
+        command_word = list_of_words[0].lower()
 
-        list_of_words = stripped_input.split(" ")
-        command_word = list_of_words[0]
+        if self.player and self.player.current_room.name == "Glacier (S)":
+            bloquer_action = False
+
+            if command_word == "go" and len(list_of_words) > 1:
+                if list_of_words[1].upper() == "U":
+                    bloquer_action = True
+            
+            elif command_word == "escalade":
+                bloquer_action = True
+
+            if bloquer_action:
+                if "piolet" not in self.player.inventory:
+                    print("\n⛔ IMPOSSIBLE DE GRIMPER !")
+                    print("La paroi est trop abrupte et la glace trop dure.")
+                    print("Vous avez besoin d'un piolet pour assurer votre ascension.")
+                    return 
 
         if command_word not in self.commands.keys():
             print(f"\nVous ne savez pas ce qu'est '{command_word}'\n")

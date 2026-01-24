@@ -44,6 +44,7 @@ class Room:
         self.solved = False
         self.inventory = {}
         self.characters = {}
+        self.danger = None
     
     def get_exit(self, direction):
 
