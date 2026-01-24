@@ -8,11 +8,17 @@
       "description": "L'air est saturé d'une odeur de café brûlé et de transpiration rance. D'autres équipes sont recroquevillées autour des réchauds, murmurant dans des langues étrangères. Personne ne vous regarde dans les yeux. L'ambiance est lourde, comme avant un orage.",
       "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null },
       "items": [
-          { "name": "piolet", "image":null,
-      "description": "un piolet technique en acier trempé", "weight": 1.2 },
-          { "name": "corde", "image":null,
-      "description": "une corde d'escalade de 50m", "weight": 3.5 }
-      ]
+          { "name": "piolet",
+            "description": "un piolet technique en acier trempé", "weight": 1.2 },
+          {
+            "name": "Thermos",
+            "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre.",
+            "weight": 0.8,
+            "effect": {
+              "variable": "heat",
+              "value": 40
+            }
+          }]
     },
     "l1_glacier": {
       "name": "Glacier (S)",
@@ -38,13 +44,35 @@
         },
       "description": "Des piles de bidons bleus et de caisses renforcées forment un labyrinthe. Vivres, oxygène, cordes... Tout est là, froid et inerte, attendant d'être hissé vers la zone de mort.",
       "exits": { "N": "l1_vue", "E": null, "S": "l1_glacier", "O": "l1_camp_base" },
-      "items": [
-          {"name": "barre protéinée",
-          "image":null,
-      "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
-          "weight": 0.3}
-      ]
-      
+      "items":[{
+                    "name": "Bâtons",
+                    "description": "En carbone léger. Ils soulagent les jambes et le dos lors des longues marches d'approche.",
+                    "weight": 0.6,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "energy",
+                        "value": 0.75
+                    }
+                },
+                {
+                    "name": "Chaufferette",
+                    "description": "Un petit sachet à craquer. Dégage une chaleur intense pendant quelques minutes.",
+                    "weight": 0.1,
+                    "effect": {
+                        "variable": "heat",
+                        "value": 10
+                    }
+                },
+                {
+                    "name": "Chaufferette",
+                    "description": "Un petit sachet à craquer. Dégage une chaleur intense pendant quelques minutes.",
+                    "weight": 0.1,
+                    "effect": {
+                        "variable": "heat",
+                        "value": 10
+                    }
+                }]
+    
     },
     "l1_vue": {
       "name": "Point de vue Pégase",
@@ -58,7 +86,19 @@
       "name": "Entrée Glacier (E)",
       "image":"l2_entree.jpeg",
       "description": "La glace devient chaotique. Le sol est une mosaïque de blocs instables. Chaque pas résonne d'un craquement sinistre en profondeur.",
-      "exits": { "N": "l2_pont", "E": "l2_serac", "S": null, "O": null }
+      "exits": { "N": "l2_pont", "E": "l2_serac", "S": null, "O": null },
+      "items": [
+                {
+                    "name": "Sonde",
+                    "description": "Une tige métallique pour piquer la neige et détecter les crevasses cachées.",
+                    "weight": 0.5,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "d_difficulty",
+                        "value": 0.75
+                    }
+                }
+            ]
     },
     "l2_serac": {
       "name": "Sérac Instable",
@@ -88,7 +128,28 @@
       "name": "Cimetière Bouteilles",
       "image":"l2_cimetiere.jpeg",
       "description": "Des centaines de bouteilles d'oxygène vides, rouillées ou éclatées, gisent ici à moitié ensevelies. Les déchets des expéditions passées, témoins silencieux de ceux qui ont réussi... ou échoué.",
-      "exits": { "N": "l2_mur", "E": null, "S": null, "O": "l2_moraine" }
+      "exits": { "N": "l2_mur", "E": null, "S": null, "O": "l2_moraine" },
+      "items": [
+                {
+                    "name": "Couverture",
+                    "description": "Une fine feuille dorée qui réfléchit la chaleur corporelle. Bruyante mais vitale pour les bivouacs.",
+                    "weight": 0.1,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "heat",
+                        "value": 0.75
+                    }
+                },
+                {
+                    "name": "Gel",
+                    "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau.",
+                    "weight": 0.1,
+                    "effect": {
+                        "variable": "energy",
+                        "value": 25
+                    }
+                }
+            ]
     },
     "l2_mur": {
       "name": "Le Mur (S)",
@@ -104,13 +165,46 @@
       "name": "Camp Base Av. (E)",
       "image":"l3_camp_base_av.jpeg",
       "description": "Quelques tentes sont plantées au pied du grand mur. C'est ici que l'escalade verticale commence vraiment. L'atmosphère est fébrile.",
-      "exits": { "N": "l3_diedre", "E": "l3_piolet", "S": null, "O": null }
+      "exits": { "N": "l3_diedre", "E": "l3_piolet", "S": null, "O": null },
+      "items": [
+                {
+                    "name": "Veste",
+                    "description": "Une armure de plumes rouges contre le vent glacial. Volumineuse mais offre une isolation totale.",
+                    "weight": 3.0,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "heat",
+                        "value": 0.6
+                    }
+                },
+                {
+                    "name": "Thermos",
+                    "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre.",
+                    "weight": 0.8,
+                    "effect": {
+                        "variable": "heat",
+                        "value": 40
+                    }
+                }
+            ]
     },
     "l3_piolet": {
       "name": "Le Piolet Rouge (Lore)",
       "image":"l3_piolet.jpeg",
       "description": "Un vieux piolet en bois est coincé dans une fissure profonde. Une sangle rouge délavée y est encore attachée. Quelqu'un a dû l'abandonner pour survivre... ou il marque l'endroit d'une chute.",
-      "exits": { "N": "l3_cheminee", "E": null, "S": null, "O": "l3_camp_base_av" }
+      "exits": { "N": "l3_cheminee", "E": null, "S": null, "O": "l3_camp_base_av" },
+      "items": [
+                {
+                    "name": "Piolet_Carbone",
+                    "description": "Lame courbée agressive. Facilite l'ancrage et réduit l'effort technique.",
+                    "weight": 0.9,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "q_difficulty",
+                        "value": 0.75
+                    }
+                }
+            ]
     },
     "l3_diedre": {
       "name": "Le Grand Dièdre",
@@ -118,11 +212,16 @@
       "description": "La montagne forme un livre ouvert gigantesque. Vous grimpez dans la reliure, coincé entre deux murs de granit vertigineux.",
       "exits": { "N": null, "E": "l3_cheminee", "S": "l3_camp_base_av", "O": null },
       "items": [
-          {"name": "barre protéinée",
-          "image":null,
-      "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
-          "weight": 0.3}
-      ]
+                {
+                    "name": "Magnésie",
+                    "description": "Sèche instantanément les mains pour une adhérence parfaite. Simplifie la prise (Consommable).",
+                    "weight": 0.2,
+                    "effect": {
+                        "variable": "q_difficulty",
+                        "value": 0.75
+                    }
+                }
+            ]
     },
     "l3_cheminee": {
       "name": "Cheminée Étroite",
@@ -154,11 +253,25 @@
       "description": "Les restes d'une tente jaune, déchiquetée par les éléments. À l'intérieur, un sac de couchage gelé et une casserole cabossée. Une sensation de solitude absolue vous envahit.",
       "exits": { "N": "l4_serac_menacant", "E": null, "S": null, "O": "l4_jardin" },
       "items": [
-          {"name": "barre protéinée",
-          "image":null,
-      "description": "Une brique dense aux céréales et au miel. Elle est gelée si dur qu'il faut la casser pour la manger. +3 Énergie",
-          "weight": 0.3}
-      ]
+                {
+                    "name": "Ration",
+                    "description": "Une boîte de conserve rouillée contenant une pâte de viande et de graisse. Infect, mais c'est du carburant pur.",
+                    "weight": 0.4,
+                    "effect": {
+                        "variable": "energy",
+                        "value": 50
+                    }
+                },
+                {
+                    "name": "Chaufferette",
+                    "description": "Un petit sachet à craquer. Dégage une chaleur intense pendant quelques minutes.",
+                    "weight": 0.1,
+                    "effect": {
+                        "variable": "heat",
+                        "value": 10
+                    }
+                }
+            ]
     },
     "l4_camp1": {
       "name": "Camp 1 (E)",
@@ -196,7 +309,19 @@
       "description": "Vous émergez sur une étendue plate. Le vent n'est plus une rafale, c'est un mur solide qui vous pousse en arrière. Le bruit est assourdissant.",
       "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
       "exits": { "N": null, "E": null, "S": null, "O": "l4_echo", "U": "l5_nid" },
-      "challenge_exit": "U"
+      "challenge_exit": "U",
+      "items": [
+                {
+                    "name": "Lunettes",
+                    "description": "Augmentent les contrastes pour distinguer la glace bleue (solide) de la neige soufflée (piège).",
+                    "weight": 0.1,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "d_difficulty",
+                        "value": 0.75
+                    }
+                }
+            ]
     },
     
     "l4_jardin": {
@@ -216,7 +341,18 @@
       "name": "L'Écho du Soviétique",
       "image":"l4_echo.jpeg",
       "description": "Votre radio crachote. Vous croyez entendre des voix russes, distinctes, paniquées. Puis le silence. Votre radio est éteinte depuis une heure...",
-      "exits": { "N": null, "E": "l4_plateau", "S": null, "O": "l4_araignee" }
+      "exits": { "N": null, "E": "l4_plateau", "S": null, "O": "l4_araignee" },
+      "items": [
+                {
+                    "name": "Ration",
+                    "description": "Une boîte de conserve rouillée contenant une pâte de viande et de graisse. Infect, mais c'est du carburant pur.",
+                    "weight": 0.4,
+                    "effect": {
+                        "variable": "energy",
+                        "value": 50
+                    }
+                }
+            ]
     },
     
 
@@ -227,7 +363,18 @@
       "name": "Le Nid (Camp 2) (E)",
       "image":"l5_nid.jpeg",
       "description": "Le dernier camp. À partir d'ici, vous entrez dans la Zone de Mort. Le corps ne se régénère plus, il se consume. Il faut monter ou mourir.",
-      "exits": { "N": "l5_balcon", "E": null, "S": "l5_vide", "O": null }
+      "exits": { "N": "l5_balcon", "E": null, "S": "l5_vide", "O": null },
+      "items": [
+                {
+                    "name": "Thermos",
+                    "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre.",
+                    "weight": 0.8,
+                    "effect": {
+                        "variable": "heat",
+                        "value": 40
+                    }
+                }
+            ]
     },
     "l5_vide": {
       "name": "Vide",
@@ -245,7 +392,37 @@
       "name": "Refuge Zéro (Secret/Lore)",
       "image":"l5_refuge.jpeg",
       "description": "Une petite grotte s'ouvre ici. À l'intérieur... c'est impossible. Il fait chaud. Une odeur de bois brûlé ? Non, c'est une hallucination. Il faut sortir avant de s'endormir pour toujours.",
-      "exits": { "N": "l5_veine", "E": null, "S": "l5_vide", "O": "l5_balcon" }
+      "exits": { "N": "l5_veine", "E": null, "S": "l5_vide", "O": "l5_balcon" },
+      "items": [
+                {
+                    "name": "Masque",
+                    "description": "Enrichit l'air raréfié. Indispensable au-dessus de 7000m pour ne pas s'épuiser à chaque pas.",
+                    "weight": 1.5,
+                    "effect": {
+                        "type": "passif",
+                        "variable": "energy",
+                        "value": 0.75
+                    }
+                },
+                {
+                    "name": "Gel",
+                    "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau.",
+                    "weight": 0.1,
+                    "effect": {
+                        "variable": "energy",
+                        "value": 25
+                    }
+                },
+                {
+                    "name": "Gel",
+                    "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau.",
+                    "weight": 0.1,
+                    "effect": {
+                        "variable": "energy",
+                        "value": 25
+                    }
+                }
+            ]
     },
     "l5_iris": {
       "name": "L'Iris de la Montagne",
@@ -315,5 +492,6 @@
       "description": "Ce n'est pas une grotte, ni un sommet. C'est une singularité. Le vent s'est tu. Le temps ne semble plus s'écouler. Vous avez atteint la fin du voyage, là où la réalité de la montagne se dissout.",
       "exits": { "N": null, "E": null, "S": null, "O": "l7_ciel" }
     }
-  }
-}
+}}
+
+
