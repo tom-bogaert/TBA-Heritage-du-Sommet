@@ -18,7 +18,7 @@
       "name": "Glacier (S)",
       "image":null,
       "description": "Vous quittez la sécurité relative du camp. Le vent vous gifle instantanément le visage. Devant vous, la langue de glace grise s'étend vers le haut, parsemée de rochers noirs. Le froid commence à mordre à travers vos gants.",
-      "challenge": { "nb_tours": 3, "min_inputs": 100, "max_inputs": 120, "time": 60.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 3, "min_inputs": 3, "max_inputs": 5, "time": 3.0, "pool": "AGP" },
       "exits": { "N": "l1_stock", "E": null, "S": null, "O": "l1_mess", "U": "l2_entree"},
       "challenge_exit": "U"
     },
@@ -89,7 +89,7 @@
       "name": "Camp Base Av. (S)",
       "image":null,
       "description": "Quelques tentes sont plantées au pied du grand mur. C'est ici que l'escalade verticale commence vraiment. L'atmosphère est fébrile.",
-      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 3, "min_inputs": 3, "max_inputs": 5, "time": 3.0, "pool": "AGP" },
       "exits": { "N": null, "E": null, "S": "l2_cimetiere", "O": null, "U": "l3_mur_entree"},
       "challenge_exit": "U" 
     },
