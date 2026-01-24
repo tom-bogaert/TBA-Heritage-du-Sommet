@@ -8,10 +8,11 @@ class Item:
         weight (float): Le poids de l'objet en kg.
     """
 
-    def __init__(self, name, description, weight):
+    def __init__(self, name, description, weight, effect):
         self.name = name
         self.description = description
         self.weight = weight
+        self.effect = effect
 
     def __str__(self):
         return f"{self.name} : {self.description} ({self.weight} kg)"

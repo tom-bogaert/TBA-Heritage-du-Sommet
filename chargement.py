@@ -33,9 +33,15 @@ class Chargement:
                     new_room.danger = room_data['danger']
 
                 if 'items' in room_data:
-                    for item_data in room_data['items']:
-                        new_item = Item(item_data['name'], item_data['description'], item_data['weight'])
-                        new_room.inventory[new_item.name] = new_item
+                    if 'items' in room_data:
+                        for item_data in room_data['items']:
+                            name = item_data.get('name') or item_data.get('id')
+                            description = item_data.get('description', "Pas de description")
+                            weight = item_data.get('weight', 0.1)
+                            effect = item_data.get('effect')
+                            
+                            new_item = Item(name, description, weight, effect)
+                            new_room.inventory[new_item.name] = new_item
                 
                 if 'characters' in room_data:
                     for char_data in room_data['characters']:

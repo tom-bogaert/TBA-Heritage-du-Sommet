@@ -7,16 +7,38 @@ from game import Game
 import time
 
 class _StdoutRedirector:
-    """Redirige les print() vers le widget Text de Tkinter."""
+    """Redirige les print() vers le widget Text de Tkinter avec une détection stable."""
     def __init__(self, text_widget):
         self.text_widget = text_widget
 
     def write(self, msg):
-        if msg:
-            self.text_widget.configure(state="normal")
-            self.text_widget.insert("end", msg)
-            self.text_widget.see("end")
-            self.text_widget.configure(state="disabled")
+        if not msg or msg == "\n":
+            self._insert_text(msg, None)
+            return
+
+        self.text_widget.configure(state="normal")
+        msg_lower = msg.lower()
+        tag = "info"
+
+        if msg.strip().startswith(">"):
+            tag = "cmd"
+        
+        elif any(word in msg_lower for word in ["|"]):
+            tag = "error"
+
+        elif any(word in msg_lower for word in ["inventaire", "quête", "journal", "objectif", "récompense, utilisez"]):
+            tag = "inv"
+
+        elif ":" in msg and not msg.strip().startswith("http"):
+            tag = "npc"
+
+        self._insert_text(msg, tag)
+
+    def _insert_text(self, msg, tag):
+        self.text_widget.configure(state="normal")
+        self.text_widget.insert("end", msg, tag)
+        self.text_widget.see("end")
+        self.text_widget.configure(state="disabled")
 
     def flush(self):
         pass
@@ -248,8 +270,6 @@ class GameGUI(tk.Tk):
         timer_frame.grid(row=1, column=0, sticky="new", padx=(0, 10), pady=(5, 0))      
         tk.Label(timer_frame, textvariable=self.timer_var, font=("Consolas", 24, "bold"), 
                  bg=BG_PANEL, fg="#00E676").pack(pady=5)
-        self._update_timer_loop()
-
 
         # Mouvements
         move_frame = tk.LabelFrame(center_container, text=" Déplacements ", bg=BG_PANEL, fg=FG_TEXT, font=("Helvetica", 12, "bold"))
@@ -280,8 +300,6 @@ class GameGUI(tk.Tk):
         tk.Button(buttons_frame, image=self._btn_help, text="Aide", bg=BG_PANEL, fg=FG_TEXT, activebackground="#444", bd=0,
                   command=lambda: self._send_command("help")).grid(row=3, column=0, sticky="e", padx=80, pady=(0, 10))
 
-
-
         # 3. TERMINAL
         output_frame = tk.Frame(self, bg=BG_PANEL, bd=2, relief="raised")
         output_frame.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=30, pady=(0, 30))
@@ -291,6 +309,13 @@ class GameGUI(tk.Tk):
         scrollbar = ttk.Scrollbar(output_frame, orient="vertical")
         self.text_output = tk.Text(output_frame, wrap="word", yscrollcommand=scrollbar.set, state="disabled",
                                    bg="#111", fg="#eee", font=("Consolas", 11), bd=0, padx=10, pady=10)
+        
+        self.text_output.tag_configure("error", foreground="#FF5252", font=("Consolas", 11, "bold"))
+        self.text_output.tag_configure("cmd", foreground="#00E676", font=("Consolas", 11, "italic"))
+        self.text_output.tag_configure("inv", foreground="#BA68C8", font=("Consolas", 11))
+        self.text_output.tag_configure("npc", foreground="#FFD700", font=("Consolas", 11))
+        self.text_output.tag_configure("info", foreground="#81D4FA", font=("Consolas", 11))
+
         scrollbar.config(command=self.text_output.yview)
         self.text_output.grid(row=0, column=0, sticky="nsew")
         scrollbar.grid(row=0, column=1, sticky="ns")
@@ -375,3 +400,10 @@ class GameGUI(tk.Tk):
     def _on_close(self):
         sys.stdout = self.original_stdout
         self.destroy()
+
+
+    def log(self, message, tag=None):
+        self.text_output.configure(state="normal")
+        self.text_output.insert("end", message + "\n", tag)
+        self.text_output.see("end")
+        self.text_output.configure(state="disabled")

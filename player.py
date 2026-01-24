@@ -48,12 +48,14 @@ class Player():
         self.mental_health = 100
         self.heat = 100
         self.difficulty = 1.0
+        self.e_coeff_damage = 1.0
+        self.h_coeff_damage = 1.0
 
 
     def move(self, direction):
         next_room = self.current_room.exits[direction]
         if next_room is None:
-            print("\nAucune porte dans cette direction !\n")
+            print("\n|Aucune porte dans cette direction !\n")
             return False
         
         self.history.append(self.current_room)
@@ -63,7 +65,7 @@ class Player():
 
     def get_history(self):
         if not self.history:
-            return "\nVous n'avez visité aucune autre zone.\n"
+            return "\n|Vous n'avez visité aucune autre zone.\n"
         result = "\nVous avez déjà visité les zones suivantes:\n"
         for room in self.history:
             result += f"        - {room.name}\n"
@@ -71,7 +73,7 @@ class Player():
 
     def get_inventory(self):
         if not self.inventory:
-            return "Votre inventaire est vide.\n"
+            return "|Votre inventaire est vide.\n"
         result = "Vous disposez des items suivants :\n"
         for item, _ in self.inventory.values():
             result += f"    - {item}\n"
@@ -81,13 +83,24 @@ class Player():
         self.rewards.append(reward)
 
     def loose_heat_to_death(self):
-        self.heat -= self.difficulty * 2
+        coeff = self.get_passive_modifier("h_coeff_damage")
+        self.heat -= (self.difficulty * 2) * self.h_coeff_damage * coeff
         if self.heat < 0:
             self.heat = 0
-            print("\n💀 DÉFAITE : Vous êtes mort de froid.")
-            print("Votre corps resteras congelé ici jusqu'as la fin des temps...")
+            print("\|n💀 DÉFAITE : Vous êtes mort de froid.")
+            print("|Votre corps resteras congelé ici jusqu'as la fin des temps...")
             return True
         return False
     
     def player_luck(self):
         return (random.random()*self.difficulty)+1
+
+
+    def get_passive_modifier(self, stat_name):
+        """Calcule le multiplicateur total pour une statistique donnée."""
+        modifier = 1.0
+        for item, _ in self.inventory.values():
+            if hasattr(item, 'effect') and item.effect:
+                if item.effect.get("type") == "passive" and item.effect.get("variable") == stat_name:
+                    modifier *= item.effect.get("value", 1.0)
+        return modifier

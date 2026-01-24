@@ -48,7 +48,7 @@ class Actions:
                     valid_exits.append(direction)
             
             if not valid_exits:
-                print("(Il n'y a aucune sortie évidente.)")
+                print("(|Il n'y a aucune sortie évidente.)")
             else:
                 for direction in sorted(valid_exits):
                     print(f"'{command_word} {direction}'")
@@ -73,11 +73,11 @@ class Actions:
         next_room = player.current_room.exits.get(direction)
 
         if next_room is None:
-            print("Vous ne pouvez pas aller par là !\n")
+            print("|Vous ne pouvez pas aller par là !\n")
             if direction in liste_acceptance or direction in player.current_room.exits.keys() :
-                print(f"Prendre la direction '{str([i for i in liste_acceptance if str(i).startswith(direction)][0])}' est impossible !\n")
+                print(f"|Prendre la direction '{str([i for i in liste_acceptance if str(i).startswith(direction)][0])}' est impossible !\n")
             else :
-                print("Cette direction '" + str(direction) + "' est inconnu !\n")
+                print("|Cette direction '" + str(direction) + "' est inconnu !\n")
             return False
         
         player.move(direction)
@@ -87,29 +87,23 @@ class Actions:
 
 
     def climb(game, list_of_words, number_of_parameters):
-        """
-        Lance le QTE si la salle actuelle est une phase d'escalade.
-        """
         player = game.player
         current_room = player.current_room
-        l = len(list_of_words)
         
-        if l != number_of_parameters + 1:
-            print(MSG0.format(command_word=list_of_words[0]))
-            return False
-
         if current_room.challenge is None:
-            print("\nIl n'y a rien de particulier à escalader ici. Vous pouvez marcher normalement.\n")
+            print("\n|Il n'y a rien de particulier à escalader ici.\n")
             return False
 
         config = current_room.challenge
+        item_mod = player.get_passive_modifier("difficulty")
+        total_diff = player.difficulty * item_mod
         
         qte_climb = QTE(
-            game,  # <--- Ajout de l'argument game
-            nb_tours=config.get("nb_tours", 3),
-            min_inputs=config.get("min_inputs", 2),
-            max_inputs=config.get("max_inputs", 4),
-            temps_reaction=config.get("time", 2.0),
+            game,  
+            nb_tours=int(config.get("nb_tours", 3) * total_diff),
+            min_inputs=int(config.get("min_inputs", 2) * total_diff),
+            max_inputs=int(config.get("max_inputs", 4) * total_diff),
+            temps_reaction=config.get("time", 2.0) / total_diff,
             pool_lettres=config.get("pool", "AZERTY")
         )
         
@@ -126,9 +120,9 @@ class Actions:
             else:
                 print("Erreur : La sortie d'escalade semble bloquée ou mal définie")
         else:
-            print("\n--- ÉCHEC ---")
-            print("Vous dévissez et vous retrouvez au pied de la paroi.")
-            print("Il faut réessayer pour passer.")
+            print("\n|--- ÉCHEC ---")
+            print("|Vous dévissez et vous retrouvez au pied de la paroi.")
+            print("|Il faut réessayer pour passer.")
         
         return True
 
@@ -287,7 +281,7 @@ class Actions:
             game.quest_manager.check_events(event_code, game.player)
             return True
         else:
-            print(f"\nIl n'y a personne du nom de '{npc_name}' ici.\n")
+            print(f"\n|Il n'y a personne du nom de '{npc_name}' ici.\n")
             return False
     
 
@@ -355,14 +349,14 @@ class Actions:
         room = player.current_room
 
         if item_name not in room.inventory:
-            print(f"\nL'objet '{item_name}' n'est pas ici.\n")
+            print(f"\n|L'objet '{item_name}' n'est pas ici.\n")
             return False
 
         item = room.inventory[item_name]
         current_weight = sum(i.weight for i, _ in player.inventory.values())
 
         if current_weight + item.weight > player.max_weight:
-            print(f"\nImpossible de prendre '{item_name}' : trop lourd !\n")
+            print(f"\n|Impossible de prendre '{item_name}' : trop lourd !\n")
             return False
         
         del room.inventory[item_name]
@@ -390,7 +384,7 @@ class Actions:
         room = player.current_room
 
         if item_name not in player.inventory:
-            print(f"\nVous ne possédez pas l'objet '{item_name}'.\n")
+            print(f"\n|Vous ne possédez pas l'objet '{item_name}'.\n")
             return False
         
         item, _ = player.inventory[item_name]
@@ -400,3 +394,33 @@ class Actions:
 
         print(f"\nVous avez déposé l'objet '{item_name}'.\n")
         return True
+
+
+    def use(game, list_of_words, number_of_parameters):
+        if len(list_of_words) <= number_of_parameters:
+            print("Quel objet de l'inventaire voulez-vous utiliser ?")
+            return
+
+        item_name = list_of_words[1]
+        player = game.player
+
+        if item_name not in player.inventory:
+            print(f"|Vous ne possédez pas de {item_name}.")
+            return
+
+        item, from_room = player.inventory[item_name] 
+        
+        if hasattr(item, 'effect') and item.effect:
+            variable = item.effect.get("variable")
+            value = item.effect.get("value")
+
+            if variable == "energy":
+                player.energy = min(100, player.energy + value)
+                print(f"Vous utilisez {item_name}. Énergie +{value}.")
+            elif variable == "heat":
+                player.heat = min(100, player.heat + value)
+                print(f"Vous utilisez {item_name}. Chaleur +{value}.")
+            
+            del player.inventory[item_name]
+        else:
+            print(f"|L'objet {item_name} ne peut pas être utilisé ainsi.")

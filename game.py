@@ -31,6 +31,7 @@ class Game:
         self.commands["check"] = Command("check", " : vérifier son inventaire", Actions.check, 0)
         self.commands["talk"] = Command("talk", " <nom> : parler à un personnage", Actions.talk, 1)
         self.commands["escalade"] = Command("escalade", " : Tenter de grimper (QTE)", Actions.climb, 0)
+        self.commands["use"] = Command("use", " <objet> : utiliser un objet de l'inventaire", Actions.use, 1)
         
         self.commands["quests"] = Command("quests", " : afficher le journal des quêtes", Actions.quests, 0)
         self.commands["quest"] = Command("quest", " <nom> : afficher les détails d'une quête", Actions.quest, 1)
@@ -85,7 +86,7 @@ class Game:
 
     def check_loose(self):
         if self.player.energy <= 0:
-            print("\n💀 DÉFAITE : Vous n'avez plus d'énergie pour continuer.")
+            print("\n|💀 DÉFAITE : Vous n'avez plus d'énergie pour continuer.")
             self.finished = True
             return True
         return False
@@ -104,7 +105,7 @@ class Game:
 
             if hasattr(nouvelle_salle, 'danger') and nouvelle_salle.danger:
                 infos = nouvelle_salle.danger
-                print(f"\n⚠️  ZONE DANGEREUSE : {nouvelle_salle.name}")
+                print(f"\n|⚠️  ZONE DANGEREUSE : {nouvelle_salle.name}")
                 
                 epreuve = EpreuveDanger(self, 
                                       rows=infos.get("rows", 6), 
@@ -118,16 +119,12 @@ class Game:
                     nouvelle_salle.danger = None
                 else:
                     print("💥 CRACK ! La glace cède sous vos pieds !")
-                    degats = 25
-                    self.player.energy -= degats
-                    print(f"Vous perdez {degats} points d'énergie.")
+                    passive_e = self.player.get_passive_modifier("e_coeff_damage")
+                    base_degats = 25
+                    degats_finaux = base_degats * self.player.e_coeff_damage * passive_e
                     
-                    if self.gui:
-                        self.gui.var_energy.set(self.player.energy)
-                        
-                    if self.player.energy <= 0:
-                        print("💀 Le froid et les blessures ont eu raison de vous.")
-                        self.finished = True
+                    self.player.energy -= degats_finaux
+                    print(f"|Vous perdez {int(degats_finaux)} points d'énergie.")
 
         if self.check_loose(): return
         self.check_win()
@@ -163,9 +160,9 @@ class Game:
 
             if bloquer_action:
                 if "piolet" not in self.player.inventory:
-                    print("\n⛔ IMPOSSIBLE DE GRIMPER !")
-                    print("La paroi est trop abrupte et la glace trop dure.")
-                    print("Vous avez besoin d'un piolet pour assurer votre ascension.")
+                    print("\n|⛔ IMPOSSIBLE DE GRIMPER !")
+                    print("|La paroi est trop abrupte et la glace trop dure.")
+                    print("|Vous avez besoin d'un piolet pour assurer votre ascension.")
                     return 
 
         if command_word not in self.commands.keys():
@@ -190,8 +187,8 @@ def main():
         app = GameGUI()
         app.mainloop()
     except Exception as e:
-        print(f"Erreur lors du lancement de l'interface graphique : {e}")
-        print("Passage automatique en mode console.")
+        print(f"|Erreur lors du lancement de l'interface graphique : {e}")
+        print("|Passage automatique en mode console.")
         Game().play()
 
 if __name__ == "__main__":
