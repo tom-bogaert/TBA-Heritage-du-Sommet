@@ -113,7 +113,11 @@ Voici les plans de l'ascension pour vous aider à vous repérer :
 
 ## 📊 Architecture technique
 Pour une vue détaillée de la structure du code, vous pouvez consulter le :
-[📄 Diagramme de Classe UML (PDF)](Diagramme%20de%20Classe%20UML.pdf)
+[![Aperçu du diagramme](assets/UML_preview.png)](Diagramme%20de%20Classe%20UML.pdf)
+*Cliquez sur l'image pour ouvrir le fichier PDF complet.*
+
+
 ---
 *Bonne chance pour l'ascension. La montagne vous observe.*
+
 
