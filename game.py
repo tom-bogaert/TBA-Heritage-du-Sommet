@@ -1,3 +1,4 @@
+from time import sleep
 from room import Room
 from player import Player
 from command import Command
@@ -54,14 +55,22 @@ class Game:
 
         # --- QUÊTES ---
         q1 = Quest("Sécurité_avant_tout", "Trouver un piolet au Mess.", "TAKE_piolet", "Maîtrise du piolet")
-        q2 = Quest("Première_Ascension", "Grimper la première paroi.", "MOVE_Entrée Glacier (E)", "Acclimatation")
-        q3 = Quest("Le_toit_du_monde", "Atteindre le sommet.", "MOVE_LE LOCUS (Fin)", "Gloire éternelle")
-        q4 = Quest("Bienvenue", "Parler au Sherpa", "TALK_Sherpa", "Infos montagne")
+        q2 = Quest("Première_Ascension", "Grimper la première paroi.", "MOVE_Entrée Glacier (E)", "Santé Mentale +1")
+        q3 = Quest("Legende_du_Froid", "Trouver le légendaire Dôme de glace.", "MOVE_Le Dôme de Glace", "Santé Mentale +1")
+        q4 = Quest("Rencontre_Ivan", "Parler à l'alpiniste russe Ivan.", "TALK_Ivan", "Santé Mentale +1")
+        q5 = Quest("Remise_en_question", "Se remettre en question face à son reflet (autre_d).", "TALK_Autre_d", "Santé Mentale +1")
+        q6 = Quest("Paix_interieure", "Faire la paix avec soi-même (autre_b).", "TALK_Autre_b", "Santé Mentale +1")
+        q7 = Quest("Appel_du_vide", "Retrouver la radio de Pégase.", "TAKE_Radio de Pégase", "Santé Mentale +1")
+        q8 = Quest("Secrets_de_Pegase", "Trouver le Carnet de Pégase.", "TAKE_Carnet_de_Pegase", "Santé Mentale +1")
+        q9 = Quest("Survie_passée", "Rejoindre le camp abandonné.", "MOVE_Camp 1.5 Abandonné", "Santé Mentale +1")
+        q10 = Quest("Porte_de_la_mort", "Rejoindre le camp 'Le Nid'.", "MOVE_Le Nid (Camp 2) (E)", "Santé Mentale +1")
         
-        self.quest_manager.add_quest(q1)
-        self.quest_manager.add_quest(q2)
-        self.quest_manager.add_quest(q3)
-        self.quest_manager.add_quest(q4)
+
+        qf = Quest("Le_toit_du_monde", "Atteindre le sommet.", "MOVE_LE LOCUS (Fin)", "Gloire éternelle")
+
+        
+        for q in [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, qf]:
+            self.quest_manager.add_quest(q)
 
         # --- PNJs ---
         dialogues_sherpa = [
@@ -120,6 +129,18 @@ class Game:
         
         if self.player.current_room != ancienne_salle:
             nouvelle_salle = self.player.current_room
+
+            if nouvelle_salle.name == "LE LOCUS (Fin)":
+                print("\n|--- L'HÉRITAGE DU SOMMET ---")
+                print("|Vous atteignez enfin le point culminant. L'air est trop rare, le silence trop lourd.")
+                print("|La 'Veine Jaune' brille d'un éclat insoutenable. Votre esprit se fissure.")
+                print("|Avant de vous éteindre vous repensez au chemin parcouru jusqu'à présent et regrettez vos QUÊTES non acomplis...")
+                print("|💀 DÉFAITE : Vous avez atteint le sommet, mais vous avez perdu la raison.")
+                print("|Votre corps reste prostré, fixant l'éternité...")
+                
+                self.player.mental_health = 0
+                self.finished = True
+                return
             
             event_move = f"MOVE_{nouvelle_salle.name}"
             self.quest_manager.check_events(event_move, self.player)
@@ -137,7 +158,7 @@ class Game:
                 epreuve = EpreuveDanger(self,
                                       rows=infos.get("rows", 6), 
                                       cols=infos.get("cols", 6), 
-                                      mines=infos.get("mines", 5)*item_mod)
+                                      mines=int(infos.get("mines", 5)*item_mod))
                 
                 reussite = epreuve.start()
                 

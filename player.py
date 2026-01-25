@@ -78,7 +78,9 @@ class Player():
         result = "Vous disposez des items suivants :\n"
         for item, _ in self.inventory.values():
             result += f"    - {item}\n"
+        result+="POIDS : " + str(sum(i.weight for i, _ in self.inventory.values())) + " / " + str(self.max_weight) + " kg\n"
         return result
+    
 
     def add_reward(self, reward):
         self.rewards.append(reward)

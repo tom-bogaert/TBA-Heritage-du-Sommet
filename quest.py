@@ -26,12 +26,16 @@ class QuestManager:
         self.quests.append(quest)
 
     def check_events(self, event_code, player):
-        """Vérifie toutes les quêtes actives avec l'événement donné"""
         for quest in self.quests:
-            if quest.check_completion(event_code):
-                print(f"\n--- QUÊTE ACCOMPLIE : {quest.title} ---")
-                print(f"Récompense : {quest.reward}")
-                player.add_reward(quest.reward)
+            if not quest.completed and quest.trigger_event == event_code:
+                quest.completed = True
+                print(f"\n✨ QUÊTE ACCOMPLIE : {quest.title}")
+                
+                if quest.reward == "Santé Mentale +1":
+                    player.mental_health = min(100, player.mental_health + 1)
+                    print("|🧠 Votre esprit s'apaise un peu. (+1 Santé Mentale)")
+
+                
 
     def all_finished(self):
         """Retourne True si toutes les quêtes sont terminées"""
