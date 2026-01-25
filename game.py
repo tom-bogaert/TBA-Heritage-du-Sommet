@@ -9,6 +9,7 @@ from quest import Quest, QuestManager
 from epreuve_danger import EpreuveDanger 
 import sys
 
+
 class Game:
 
     def __init__(self):
@@ -59,17 +60,18 @@ class Game:
         q3 = Quest("Legende_du_Froid", "Trouver le légendaire Dôme de glace.", "MOVE_Le Dôme de Glace", "Santé Mentale +1")
         q4 = Quest("Rencontre_Ivan", "Parler à l'alpiniste russe Ivan.", "TALK_Ivan", "Santé Mentale +1")
         q5 = Quest("Remise_en_question", "Se remettre en question face à son reflet (autre_d).", "TALK_Autre_d", "Santé Mentale +1")
-        q6 = Quest("Paix_interieure", "Faire la paix avec soi-même (autre_b).", "TALK_Autre_b", "Santé Mentale +1")
+        q6 = Quest("Paix_interieure", "Faire la paix avec soi-même (autre_b).", "TALK_Autre_b", "Acceptation de sois")
         q7 = Quest("Appel_du_vide", "Retrouver la radio de Pégase.", "TAKE_Radio de Pégase", "Santé Mentale +1")
         q8 = Quest("Secrets_de_Pegase", "Trouver le Carnet de Pégase.", "TAKE_Carnet_de_Pegase", "Santé Mentale +1")
         q9 = Quest("Survie_passée", "Rejoindre le camp abandonné.", "MOVE_Camp 1.5 Abandonné", "Santé Mentale +1")
         q10 = Quest("Porte_de_la_mort", "Rejoindre le camp 'Le Nid'.", "MOVE_Le Nid (Camp 2) (E)", "Santé Mentale +1")
+        q11 = Quest("Les_anciens_passages", "Trouver le Piolet Rouge'.", "MOVE_Le Piolet Rouge", "Santé Mentale +1")
         
 
         qf = Quest("Le_toit_du_monde", "Atteindre le sommet.", "MOVE_LE LOCUS (Fin)", "Gloire éternelle")
 
         
-        for q in [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, qf]:
+        for q in [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, qf]:
             self.quest_manager.add_quest(q)
 
         # --- PNJs ---

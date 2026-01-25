@@ -3,7 +3,7 @@
 MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
 liste_acceptance = set(["NORD", "SUD", "EST", "OUEST", "UP", "DOWN"])
-
+import math
 from qte import QTE
 
 class Actions:
@@ -89,7 +89,8 @@ class Actions:
     def climb(game, list_of_words, number_of_parameters):
         player = game.player
         current_room = player.current_room
-        
+        if player.inventory.get("piolet") is None and player.get_inventory().get("Piolet_Carbone") is None:
+            print("\n|⛔ IMPOSSIBLE DE GRIMPER ! Il faut un piolet pour passer.\n")
         if current_room.challenge is None:
             print("\n|Il n'y a rien de particulier à escalader ici.\n")
             return False
@@ -101,8 +102,8 @@ class Actions:
         qte_climb = QTE(
             game,  
             nb_tours=int(config.get("nb_tours", 3)),
-            min_inputs=int(config.get("min_inputs", 2) * total_diff),
-            max_inputs=int(config.get("max_inputs", 4) * total_diff),
+            min_inputs=math.ceil(config.get("min_inputs", 2) * total_diff),
+            max_inputs=math.ceil(config.get("max_inputs", 4) * total_diff),
             temps_reaction=config.get("time", 2.0) / total_diff,
             pool_lettres=config.get("pool", "AZERTY")
         )
