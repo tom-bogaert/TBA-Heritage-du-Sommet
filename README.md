@@ -2,6 +2,10 @@
 
 Bienvenue dans **Héritage du Sommet**, un jeu d'aventure textuel immersif (Interactive Fiction) développé en Python. Le joueur incarne un alpiniste bravant les dangers d'une montagne mystique pour en atteindre le sommet légendaire.
 
+<video src="Vidéos%20présentation.mp4" controls="controls" style="max-width: 100%;">
+  Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
+
 ## 🏗️ Base de Travail
 
 Ce projet a été construit sur la base du dépôt suivant :
@@ -119,5 +123,6 @@ Pour une vue détaillée de la structure du code, vous pouvez consulter le :
 
 ---
 *Bonne chance pour l'ascension. La montagne vous observe.*
+
 
 
