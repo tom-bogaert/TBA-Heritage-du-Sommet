@@ -39,10 +39,10 @@ class Chargement:
                             description = item_data.get('description', "Pas de description")
                             weight = item_data.get('weight', 0.1)
                             effect = item_data.get('effect')
-                            
-                            new_item = Item(name, description, weight, effect)
+                            lore = item_data.get('lore') 
+                            new_item = Item(name, description, weight, effect, lore)
                             new_room.inventory[new_item.name] = new_item
-                
+                    
                 if 'characters' in room_data:
                     for char_data in room_data['characters']:
                         new_char = Character(

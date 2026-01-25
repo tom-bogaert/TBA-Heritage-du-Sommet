@@ -1,6 +1,6 @@
 class Item:
     """
-    Cette classe représente un objet (item) dans le jeu.
+    Cette classe reprÃ©sente un objet (item) dans le jeu.
 
     Attributes:
         name (str): Le nom de l'objet.
@@ -8,11 +8,12 @@ class Item:
         weight (float): Le poids de l'objet en kg.
     """
 
-    def __init__(self, name, description, weight, effect):
+    def __init__(self, name, description, weight, effect,lore=None):
         self.name = name
         self.description = description
         self.weight = weight
         self.effect = effect
+        self.lore = lore
 
     def __str__(self):
         return f"{self.name} : {self.description} ({self.weight} kg)"

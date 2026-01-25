@@ -80,7 +80,7 @@ class GameGUI(tk.Tk):
         self.txt_mental = tk.StringVar(value="100")
         self.txt_heat = tk.StringVar(value="100")
 
-        self.start_time = time.time()
+        self.start_time = None 
         self.timer_var = tk.StringVar(value="00:00:00")
 
         self.current_bg_file = None
@@ -129,7 +129,6 @@ class GameGUI(tk.Tk):
             return img
         except Exception:
             return None
-
     def _apply_alpha(self, pil_img, alpha_value):
         """Applique une transparence à une image PIL."""
         img_copy = pil_img.copy()
@@ -138,7 +137,7 @@ class GameGUI(tk.Tk):
         
         factor = alpha_value / 255.0
         r, g, b, a = img_copy.split()
-        a = a.point(lambda i: i * factor)
+        a = a.point(lambda i: int(i * factor))
         img_copy.putalpha(a)
         return img_copy
     
@@ -196,10 +195,16 @@ class GameGUI(tk.Tk):
                     self.canvas.create_image(self.IMAGE_WIDTH/2, self.IMAGE_HEIGHT/2, image=self.bg_photo_ref)
 
                 if self.char_img_object and self.char_alpha > 0:
-                    final_char = self._apply_alpha(self.char_img_object, self.char_alpha)
+                    current_alpha = self.char_alpha
+                    
+                    if self.current_char_file and "ivan" in self.current_char_file.lower():
+                        current_alpha = int(self.char_alpha * 0.8)
+
+                    final_char = self._apply_alpha(self.char_img_object, current_alpha)
+                    
                     self.char_photo_ref = ImageTk.PhotoImage(final_char)
                     self.canvas.create_image(self.IMAGE_WIDTH/2, self.IMAGE_HEIGHT/1.4, image=self.char_photo_ref)
-        except Exception:
+        except Exception as e:
             pass
 
         self.after(40, self._animate_loop)
@@ -386,6 +391,10 @@ class GameGUI(tk.Tk):
     def _send_command(self, command):
         if self.game.finished: return
         ancienne_salle = self.game.player.current_room 
+
+        if self.start_time is None:
+            self.start_time = time.time()
+            self._update_timer_loop()
         
         self.last_command = command
         print(f"\n> {command}")

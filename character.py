@@ -5,11 +5,12 @@ DEBUG = True
 
 
 class Character:
-    def __init__(self, name, description, current_room, msgs):
+    def __init__(self, name, description, current_room, msgs, moveable=True):
         self.name = name
         self.description = description
         self.current_room = current_room
         self.msgs = msgs
+        self.moveable = moveable
         
         if current_room:
             current_room.characters[self.name] = self

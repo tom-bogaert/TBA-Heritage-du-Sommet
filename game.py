@@ -69,8 +69,32 @@ class Game:
             "L'ascension n'est pas une marche continue, c'est un escalier de géants. À chaque palier d'altitude, un mur vertical te barrera la route. Tu devras grimper ces parois pour t'élever vers l'air raréfié.",
             "Écoute bien : plus haut, le sol devient traître. Tu entreras dans des ZONES DE DANGERS. Là-bas, ne cours pas. Tu dois SONDER LA GLACE pour révéler les failles cachées. Identifie les passages sûrs avant de poser le pied, ou la montagne t'avalera."
         ]
-        
+
+        dialogues_ivan = [
+            "Привет, друг! Kamarad ? Tu as les batteries ? Ma lampe faiblit. Les ombres... elles ont des dents.",
+            "L'Américain... Pégase. Je l'ai vu. Il est passé par là. Il parlait tout seul, des cercles, de la montagne vivante. Fou !",
+            "Ne monte pas au sommet. Il n'y a rien. Juste le bruit. Le bruit qui gratte derrière le ciel.",
+            "Tu as froid ? C'est bon signe. Quand tu n'auras plus froid, c'est que tu appartiens à la montagne."
+        ]
+
+        dialogues_autre_1 = [
+            "Pourquoi tu t'accroches si fort ? La chute n'est qu'un envol qui a mal tourné.",
+            "Regarde en bas. Ce n'est pas effrayant. C'est calme. Tout est silencieux en bas. Comme nous.",
+            "Tu as mal aux jambes, je le sais. Je le sens. Assieds-toi. Juste une minute. La neige est chaude si tu fermes les yeux."
+        ]
+
+        dialogues_autre_2 = [
+            "Alors comme ça... tu as continué. Je pensais que le froid t'aurait eu.",
+            "Tu es plus fort que Pégase. Lui, il a cherché l'or. Toi, tu as cherché la fin.",
+            "Il ne te reste qu'une chose à faire pour réaliser ton rêve.",
+            "Va finir ton ascension. C'est juste derrière moi. C'est là que tout s'arrête... ou que tout commence."
+        ]
+
         Character("Sherpa", "Un vieux guide au visage brûlé par le soleil et le vent.", salle_depart, dialogues_sherpa)
+        Character("Ivan", "Un echo, alpiniste russe au regard hagard, emmitouflé dans des couches de vêtements usés.", self.rooms[27], dialogues_ivan, moveable=False)
+        Character("Autre_d", "Un reflèt de vous même.", self.rooms[30], dialogues_autre_1,moveable=False)
+        Character("Autre_b", "Un reflèt de vous même.", self.rooms[40], dialogues_autre_2,moveable=False)
+
 
         self.npcs = []
         for room in self.rooms:
@@ -101,7 +125,8 @@ class Game:
             self.quest_manager.check_events(event_move, self.player)
             
             for npc in self.npcs:
-                npc.move()
+                if npc.moveable:
+                    npc.move()
 
             if hasattr(nouvelle_salle, 'danger') and nouvelle_salle.danger:
                 infos = nouvelle_salle.danger
@@ -109,7 +134,7 @@ class Game:
 
                 item_mod = self.player.get_passive_modifier("d_difficulty")
                 
-                epreuve = EpreuveDanger(self, 
+                epreuve = EpreuveDanger(self,
                                       rows=infos.get("rows", 6), 
                                       cols=infos.get("cols", 6), 
                                       mines=infos.get("mines", 5)*item_mod)
@@ -172,6 +197,9 @@ class Game:
 
     def print_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
+        print("La Face Est du K2 est le dernier grand problème de l'himalayisme. Trop raide, trop exposée aux avalanches, jamais vaincue. ")
+        print("Le passé (Projet Pégase) : Il y a 5 ans, une expédition ultra-médiatisée et suréquipée, menée par un alpiniste charismatique surnommé \"Pégase\", a tenté l'impossible. Ils ont disparu corps et biens après le Camp 2. ")
+        print("Le présent (Vous) : Vous êtes là pour réaliser l'incomplit, sur les traces de leurs aventures.")
         print("Entrez 'help' si vous avez besoin d'aide.")
         print(self.player.current_room.get_long_description())
 

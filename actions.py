@@ -413,6 +413,9 @@ class Actions:
 
         item, from_room = player.inventory[item_name] 
         
+        if hasattr(item, 'lore') and item.lore:
+            print(f"\n--- Lecture de : {item.name} ---")
+            print(f"{item.lore}\n")
         if hasattr(item, 'effect') and item.effect:
             variable = item.effect.get("variable")
             value = item.effect.get("value")
@@ -420,10 +423,11 @@ class Actions:
             if variable == "energy":
                 player.energy = min(100, player.energy + value)
                 print(f"Vous utilisez {item_name}. Énergie +{value}.")
+                del player.inventory[item_name]
             elif variable == "heat":
                 player.heat = min(100, player.heat + value)
                 print(f"Vous utilisez {item_name}. Chaleur +{value}.")
+                del player.inventory[item_name]
             
-            del player.inventory[item_name]
-        else:
+        elif not (hasattr(item, 'lore') and item.lore):
             print(f"|L'objet {item_name} ne peut pas être utilisé ainsi.")
