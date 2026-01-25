@@ -104,5 +104,16 @@ Pour tester le jeu sans se confronter à la dificulté du jeu, il y a un **GODMO
 Pour lancer le jeu en **GODMODE**, allez dans la classe player du fichier player.py et passer la variable global **GODMODE** à `True`.
 
 
+## 🗺️ Cartographie
+Voici les plans de l'ascension pour vous aider à vous repérer :
+
+![Carte du camp de base](Map_1.png)
+![Carte des sommets](Map_2.png)
+
+
+## 📊 Architecture technique
+Pour une vue détaillée de la structure du code, vous pouvez consulter le :
+[📄 Diagramme de Classe UML (PDF)](Diagramme%20de%20Classe%20UML.pdf)
 ---
 *Bonne chance pour l'ascension. La montagne vous observe.*
+
