@@ -80,7 +80,7 @@ class GameGUI(tk.Tk):
         self.txt_mental = tk.StringVar(value="100")
         self.txt_heat = tk.StringVar(value="100")
 
-        self.start_time = time.time()
+        self.start_time = None 
         self.timer_var = tk.StringVar(value="00:00:00")
 
         self.current_bg_file = None
@@ -386,6 +386,10 @@ class GameGUI(tk.Tk):
     def _send_command(self, command):
         if self.game.finished: return
         ancienne_salle = self.game.player.current_room 
+
+        if self.start_time is None:
+            self.start_time = time.time()
+            self._update_timer_loop()
         
         self.last_command = command
         print(f"\n> {command}")
