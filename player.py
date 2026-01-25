@@ -1,6 +1,8 @@
 # Define the Player class.
 import random
 
+GODMODE = False
+
 class Player():
     """
     Cette classe représente le joueur.
@@ -121,4 +123,11 @@ class Player():
             if hasattr(item, 'effect') and item.effect:
                 if item.effect.get("type") == "passif" and item.effect.get("variable") == stat_name:
                     modifier *= item.effect.get("value", 1.0)
+
+        if GODMODE:
+            if stat_name in ["e_coeff_damage", "h_coeff_damage"]:
+                modifier = 0
+            else:
+                modifier = 0.1
+
         return modifier
