@@ -1,4 +1,6 @@
-# Define the Room class.
+"""
+Ce module contient la classe Room, qui représente un lieu dans le jeu.
+"""
 
 class Room:
     """
@@ -8,32 +10,12 @@ class Room:
         name (str): Le nom court de la salle (ex: "Tower").
         description (str): La description complète de la salle.
         exits (dict): Un dictionnaire mappant les directions (str) aux objets Room (ou None).
-
-    Methods:
-        __init__(self, name, description): Initialise une nouvelle salle.
-        get_exit(self, direction): Retourne la salle dans une direction donnée (ou None).
-        get_exit_string(self): Retourne la chaîne de caractères formatée des sorties.
-        get_long_description(self): Retourne la description longue (description + sorties).
-
-    Examples:
-    
-        >>> # Setup des salles
-        >>> cuisine = Room("Cuisine", "une cuisine")
-        >>> salon = Room("Salon", "un salon")
-        >>> cuisine.exits = {"N": salon, "S": None, "E": salon}
-        
-        >>> cuisine.get_exit("N") == salon
-        True
-        >>> cuisine.get_exit("O") is None
-        True
-        
-        >>> print(cuisine.get_exit_string())
-        Sorties: N, E
-        
-        >>> print(cuisine.get_long_description())
-        Vous êtes dans une cuisine
-        Sorties: N, E
+        image (str): Le nom de l'image associée à la salle (optionnel).
+        inventory (dict): Les objets présents dans la salle.
+        characters (dict): Les personnages présents dans la salle.
     """
+
+    # pylint: disable=too-many-instance-attributes
     def __init__(self, name, description, image=None):
         self.name = name
         self.description = description
@@ -45,28 +27,30 @@ class Room:
         self.inventory = {}
         self.characters = {}
         self.danger = None
-    
-    def get_exit(self, direction):
 
-        if direction in self.exits.keys():
+    def get_exit(self, direction):
+        """Retourne la salle correspondante à la direction donnée."""
+        if direction in self.exits:
             return self.exits[direction]
-        else:
-            return None
-    
+        return None
+
     def get_exit_string(self):
-        exit_string = "Sorties: " 
-        for exit in self.exits.keys():
-            if self.exits.get(exit) is not None:
-                exit_string += exit + ", "
+        """Retourne une chaîne décrivant les sorties disponibles."""
+        exit_string = "Sorties: "
+        for exit_direction in self.exits:
+            if self.exits.get(exit_direction) is not None:
+                exit_string += exit_direction + ", "
         exit_string = exit_string.strip(", ")
         return exit_string
 
     def get_long_description(self):
+        """Retourne une description complète de la salle (nom + desc + sorties)."""
         return f"\n{self.name} :\n {self.description}\n\n{self.get_exit_string()}\n"
 
     def get_inventory(self):
+        """Retourne une chaîne listant les objets et personnages présents."""
         result = ""
-        
+
         if not self.inventory:
             result += "Il n'y a aucun objet ici.\n"
         else:
@@ -78,5 +62,5 @@ class Room:
             result += "\nPersonnages présents:\n"
             for char in self.characters.values():
                 result += f"  - {char}\n"
-                
+
         return result

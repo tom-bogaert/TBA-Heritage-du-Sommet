@@ -449,13 +449,13 @@
       "name": "Le Balcon des Échos",
       "image":"l5_balcon.jpeg",
       "description": "Vous croyez voir des silhouettes au coin de votre champ de vision. Quand vous tournez la tête, il n'y a que des rochers. L'hypoxie commence à jouer avec votre cerveau.",
-      "exits": { "N": "l5_iris", "E": "l5_refuge", "S": "l5_nid", "O": null }
+      "exits": { "N": "l5_iris", "E": null, "S": "l5_nid", "O": "l5_refuge" }
     },
     "l5_refuge": {
       "name": "Refuge Zéro",
       "image":"l5_refuge.jpeg",
       "description": "Une petite grotte s'ouvre ici. À l'intérieur... c'est impossible. Il fait chaud. Une odeur de bois brûlé ? Non, c'est une hallucination. Il faut sortir avant de s'endormir pour toujours.",
-      "exits": { "N": "l5_veine", "E": null, "S": "l5_vide", "O": "l5_balcon" },
+      "exits": { "N": "l5_veine", "E": "l5_balcon", "S": "l5_vide", "O": null },
       "items": [
                 {
                   "name": "Dictaphone",

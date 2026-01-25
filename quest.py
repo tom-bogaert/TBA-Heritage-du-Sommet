@@ -1,4 +1,13 @@
+"""
+Module de gestion des quêtes du jeu.
+Contient la classe Quest (quête individuelle) et QuestManager (gestionnaire).
+"""
+
 class Quest:
+    """
+    Représente une quête individuelle.
+    """
+    # pylint: disable=too-few-public-methods
     def __init__(self, title, description, trigger_event, reward):
         self.title = title
         self.description = description
@@ -19,23 +28,28 @@ class Quest:
 
 
 class QuestManager:
+    """
+    Gère la liste des quêtes et vérifie leur accomplissement.
+    """
     def __init__(self):
         self.quests = []
 
     def add_quest(self, quest):
+        """Ajoute une quête au gestionnaire."""
         self.quests.append(quest)
 
     def check_events(self, event_code, player):
+        """
+        Vérifie si un événement (déplacement, objet pris, dialogue) valide une quête.
+        """
         for quest in self.quests:
             if not quest.completed and quest.trigger_event == event_code:
                 quest.completed = True
                 print(f"\n✨ QUÊTE ACCOMPLIE : {quest.title}")
-                
+
                 if quest.reward == "Santé Mentale +1":
                     player.mental_health = min(100, player.mental_health + 1)
                     print("|🧠 Votre esprit s'apaise un peu. (+1 Santé Mentale)")
-
-                
 
     def all_finished(self):
         """Retourne True si toutes les quêtes sont terminées"""
@@ -51,11 +65,15 @@ class QuestManager:
         for q in self.quests:
             res += str(q) + "\n"
         return res
-    
+
     def get_quest_details(self, quest_title):
         """Retourne les détails d'une quête spécifique"""
         for q in self.quests:
             if q.title.lower() == quest_title.lower():
                 status = "Terminée" if q.completed else "En cours"
-                return f"\n--- DÉTAILS DE LA QUÊTE ---\nTitre : {q.title}\nDescription : {q.description}\nStatut : {status}\nRécompense : {q.reward}\n"
+                return (f"\n--- DÉTAILS DE LA QUÊTE ---\n"
+                        f"Titre : {q.title}\n"
+                        f"Description : {q.description}\n"
+                        f"Statut : {status}\n"
+                        f"Récompense : {q.reward}\n")
         return f"|Aucune quête trouvée avec le titre '{quest_title}'."

@@ -1,6 +1,21 @@
+"""
+Module contenant la classe EpreuveDanger (mini-jeu type Démineur).
+"""
 import tkinter as tk
-from tkinter import ttk
 import random
+
+# Couleurs constantes
+COLOR_ICE = "#54C5D4"
+COLOR_SNOW = "#FFFFFF"
+COLOR_CREVASSE = "#006064"
+COLOR_TEXT = "#00BCD4"
+COLORS_NUM = {
+    1: "#0288D1",
+    2: "#00574B",
+    3: "#D32F2F",
+    4: "#7B1FA2",
+    5: "#FFC107"
+}
 
 class EpreuveDanger:
     """
@@ -13,26 +28,19 @@ class EpreuveDanger:
         self.rows = rows
         self.cols = cols
         self.mines = mines
-        
-        self.buttons = {}  
+
+        self.buttons = {}
         self.mine_positions = set()
         self.revealed_count = 0
         self.total_safe_cells = (rows * cols) - mines
-        
+
         self.is_game_over = False
         self.success = False
-        
-        self.COLOR_ICE = "#54C5D4"  
-        self.COLOR_SNOW = "#FFFFFF" 
-        self.COLOR_CREVASSE = "#006064" 
-        self.COLOR_TEXT = "#00BCD4" 
-        self.COLORS_NUM = {
-            1: "#0288D1",
-            2: "#00574B",
-            3: "#D32F2F",
-            4: "#7B1FA2", 
-            5: "#FFC107" 
-        }
+
+        # Interface elements
+        self.root = None
+        self.top = None
+        self.grid_frame = None
 
     def start(self):
         """Lance l'épreuve graphique et retourne True si réussi, False sinon."""
@@ -41,21 +49,22 @@ class EpreuveDanger:
             return True
 
         self.root = self.game.gui
-        
 
         self.top = tk.Toplevel(self.root)
         self.top.title("🧊 SONDAGE DE LA GLACE 🧊")
         self.top.geometry("600x700")
         self.top.transient(self.root)
         self.top.grab_set()
-        self.top.configure(bg="#263238") 
+        self.top.configure(bg="#263238")
 
         # En-tête
-        tk.Label(self.top, text="DANGER : CREVASSES DÉTECTÉES", 
+        tk.Label(self.top, text="DANGER : CREVASSES DÉTECTÉES",
                  font=("Helvetica", 16, "bold"), fg="#FF5252", bg="#263238").pack(pady=(20, 5))
-        
-        tk.Label(self.top, text=f"Sondez la glace pour trouver un chemin sûr.\nIl y a {self.mines} crevasses cachées.", 
-                 font=("Helvetica", 12), fg=self.COLOR_ICE, bg="#263238").pack(pady=(0, 20))
+
+        tk.Label(self.top,
+                 text=f"Sondez la glace pour trouver un chemin sûr.\n"
+                      f"Il y a {self.mines} crevasses cachées.",
+                 font=("Helvetica", 12), fg=COLOR_ICE, bg="#263238").pack(pady=(0, 20))
 
         self.grid_frame = tk.Frame(self.top, bg="#263238")
         self.grid_frame.pack()
@@ -63,22 +72,22 @@ class EpreuveDanger:
         self._init_game()
 
         self.root.wait_window(self.top)
-        
+
         return self.success
 
     def _init_game(self):
         """Initialise la grille et place les mines."""
         while len(self.mine_positions) < self.mines:
-            r = random.randint(0, self.rows - 1)
-            c = random.randint(0, self.cols - 1)
-            self.mine_positions.add((r, c))
+            rand_r = random.randint(0, self.rows - 1)
+            rand_c = random.randint(0, self.cols - 1)
+            self.mine_positions.add((rand_r, rand_c))
 
         for r in range(self.rows):
             for c in range(self.cols):
                 btn = tk.Button(
                     self.grid_frame,
                     width=4, height=2,
-                    bg=self.COLOR_ICE,
+                    bg=COLOR_ICE,
                     activebackground="#80DEEA",
                     relief="raised",
                     bd=3,
@@ -93,11 +102,15 @@ class EpreuveDanger:
                     "neighbors": 0
                 }
 
+        self._calculate_neighbors()
+
+    def _calculate_neighbors(self):
+        """Calcule le nombre de mines voisines pour chaque case."""
         for r in range(self.rows):
             for c in range(self.cols):
                 if (r, c) in self.mine_positions:
                     continue
-                
+
                 count = 0
                 for i in range(-1, 2):
                     for j in range(-1, 2):
@@ -108,11 +121,13 @@ class EpreuveDanger:
 
     def _on_click(self, r, c):
         """Gestion du clic sur une case."""
-        if self.is_game_over: return
+        if self.is_game_over:
+            return
 
         cell = self.buttons[(r, c)]
-        
-        if cell["revealed"]: return
+
+        if cell["revealed"]:
+            return
 
         if cell["is_mine"]:
             self._game_over_loss(r, c)
@@ -122,24 +137,27 @@ class EpreuveDanger:
 
     def _reveal(self, r, c):
         """Révèle une case (et ses voisines si c'est un 0) - Algorithme Flood Fill."""
-        if not (0 <= r < self.rows and 0 <= c < self.cols): return
-        
+        if not (0 <= r < self.rows and 0 <= c < self.cols):
+            return
+
         cell = self.buttons[(r, c)]
-        if cell["revealed"]: return
+        if cell["revealed"]:
+            return
 
         cell["revealed"] = True
         self.revealed_count += 1
-        
+
         btn = cell["widget"]
-        btn.config(relief="sunken", bg=self.COLOR_SNOW, state="disabled")
+        btn.config(relief="sunken", bg=COLOR_SNOW, state="disabled")
 
         if cell["neighbors"] > 0:
-            color = self.COLORS_NUM.get(cell["neighbors"], "black")
+            color = COLORS_NUM.get(cell["neighbors"], "black")
             btn.config(text=str(cell["neighbors"]), disabledforeground=color)
         else:
             for i in range(-1, 2):
                 for j in range(-1, 2):
-                    if i == 0 and j == 0: continue
+                    if i == 0 and j == 0:
+                        continue
                     self._reveal(r + i, c + j)
 
     def _check_win(self):
@@ -147,32 +165,32 @@ class EpreuveDanger:
         if self.revealed_count == self.total_safe_cells:
             self.is_game_over = True
             self.success = True
-            
-            for pos, data in self.buttons.items():
+
+            for _, data in self.buttons.items():
                 if data["is_mine"]:
                     data["widget"].config(bg="#A5D6A7", text="🚩")
-            
-            tk.Label(self.top, text="✅ PASSAGE SÉCURISÉ !", 
+
+            tk.Label(self.top, text="✅ PASSAGE SÉCURISÉ !",
                      font=("Helvetica", 18, "bold"), fg="#69F0AE", bg="#263238").pack(pady=20)
-            
+
             self.top.after(2000, self.top.destroy)
 
     def _game_over_loss(self, hit_r, hit_c):
         """Gère la défaite (tomber dans une crevasse)."""
         self.is_game_over = True
         self.success = False
-        
+
         for (r, c), data in self.buttons.items():
             if data["is_mine"]:
-                bg_color = self.COLOR_CREVASSE
+                bg_color = COLOR_CREVASSE
                 text = "🕳️"
                 if r == hit_r and c == hit_c:
                     bg_color = "#FF5252"
                     text = "☠️"
-                
+
                 data["widget"].config(bg=bg_color, text=text, state="disabled")
 
-        tk.Label(self.top, text="💀 LA GLACE CÈDE...", 
+        tk.Label(self.top, text="💀 LA GLACE CÈDE...",
                  font=("Helvetica", 18, "bold"), fg="#FF5252", bg="#263238").pack(pady=20)
-        
+
         self.top.after(3000, self.top.destroy)
