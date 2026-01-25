@@ -9,17 +9,17 @@
       "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null },
       "items": [
           { "name": "piolet",
-            "description": "un piolet technique en acier trempé (permet d'escalader les parois)", "weight": 1.2 },
+            "description": "un piolet technique en acier trempé (permet d'escalader les parois)", "weight": 1.0 },
           {
             "name": "Journal_1",
             "description": "Une page de papier froissée, arrachée d'un carnet à spirale. L'encre a bavé à cause de l'humidité. (lire le document avec 'use')",
             "lore": "Jour 1. Le Camp de Base est posé. L'équipe Pégase est confiante. Ils ont des caméras, des drones. Ils ne regardent pas la montagne, ils regardent leurs écrans. La Face Est attend.",
-            "weight": 0.0
+            "weight": 0.2
           },
           {
             "name": "Thermos",
-            "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre. (+40 chaleur)",
-            "weight": 0.8,
+            "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre. (+25 chaleur)",
+            "weight": 2.0,
             "effect": {
               "variable": "heat",
               "value": 40
@@ -30,7 +30,7 @@
       "name": "Glacier (S)",
       "image":"l1_glacier.png",
       "description": "Vous quittez la sécurité relative du camp. Le vent vous gifle instantanément le visage. Devant vous, la langue de glace grise s'étend vers le haut, parsemée de rochers noirs. Le froid commence à mordre à travers vos gants.",
-      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 5, "time": 3.0, "pool": "AGP" },
       "exits": { "N": "l1_stock", "E": null, "S": null, "O": "l1_mess", "U": "l2_entree"},
       "challenge_exit": "U"
     },
@@ -38,22 +38,17 @@
       "name": "Camp de base (E)",
       "image": "l1_camp_base.jpeg",
       "description": "Une ville de toile éphémère posée sur la moraine. Les drapeaux de prière claquent violemment au vent. C'est votre point de départ, le dernier endroit sur terre où l'erreur est encore permise.",
-      "exits": { "N": null, "E": "l1_stock", "S": "l1_mess", "O": null }
+      "exits": { "N": null, "E": "l1_stock", "S": "l1_mess", "O": "l7_locus" }
     },
     "l1_stock": {
       "name": "Zone de Stock",
       "image":"l1_stock.jpeg",
-      "danger": {
-            "rows": 6,
-            "cols": 6,
-            "mines": 4
-        },
       "description": "Des piles de bidons bleus et de caisses renforcées forment un labyrinthe. Vivres, oxygène, cordes... Tout est là, froid et inerte, attendant d'être hissé vers la zone de mort.",
       "exits": { "N": "l1_vue", "E": null, "S": "l1_glacier", "O": "l1_camp_base" },
       "items":[{
                     "name": "Bâtons",
                     "description": "En carbone léger. Ils soulagent les jambes et le dos lors des longues marches d'approche. (perte d'énergie - 25%)",
-                    "weight": 0.6,
+                    "weight": 3.0,
                     "effect": {
                         "type": "passif",
                         "variable": "e_coeff_damage",
@@ -63,7 +58,7 @@
                 {
                     "name": "Chaufferette",
                     "description": "Un petit sachet à craquer. Dégage une chaleur intense pendant quelques minutes. (+10 chaleur)",
-                    "weight": 0.1,
+                    "weight": 0.5,
                     "effect": {
                         "variable": "heat",
                         "value": 10
@@ -72,7 +67,7 @@
                 {
                     "name": "Chaufferette",
                     "description": "Un petit sachet à craquer. Dégage une chaleur intense pendant quelques minutes. (+10 chaleur)",
-                    "weight": 0.1,
+                    "weight": 0.5,
                     "effect": {
                         "variable": "heat",
                         "value": 10
@@ -97,7 +92,7 @@
                 {
                     "name": "Sonde",
                     "description": "Une tige métallique pour piquer la neige et détecter les crevasses cachées. (difficultée zone dangereuse - 25%)",
-                    "weight": 0.5,
+                    "weight": 4.5,
                     "effect": {
                         "type": "passif",
                         "variable": "d_difficulty",
@@ -114,7 +109,7 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 3
         }
     },
     "l2_crevasse_noire": {
@@ -131,7 +126,7 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 3
         }
     },
     "l2_moraine": {
@@ -149,7 +144,7 @@
                 {
                     "name": "Couverture",
                     "description": "Une fine feuille dorée qui réfléchit la chaleur corporelle. Bruyante mais vitale pour les bivouacs. (perte de chaleur - 25%)",
-                    "weight": 0.1,
+                    "weight": 2.0,
                     "effect": {
                         "type": "passif",
                         "variable": "h_coeff_damage",
@@ -159,7 +154,7 @@
                 {
                     "name": "Gel",
                     "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau. (+25 énergie)",
-                    "weight": 0.1,
+                    "weight": 1.5,
                     "effect": {
                         "variable": "energy",
                         "value": 25
@@ -171,7 +166,7 @@
       "name": "Le Mur (S)",
       "image":"l2_mur.jpeg",
       "description": "La pente se redresse brutalement. Il n'y a plus de marche, seulement de l'escalade. La roche est froide et coupante comme du verre.",
-      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 3, "min_inputs": 3, "max_inputs": 8, "time": 3.0, "pool": "AGP" },
       "exits": { "N": null, "E": null, "S": "l2_cimetiere", "O": null, "U": "l3_camp_base_av"},
       "challenge_exit": "U" 
     },
@@ -187,7 +182,7 @@
                   "name": "Journal_2",
                   "description": "Un morceau de papier jauni, plié en quatre. Il semble avoir été gelé puis dégelé plusieurs fois. (lire le document avec 'use')",
                   "lore": "Jour 12. Premier pépin. Pégase s'énerve. Il parle de cette Veine Jaune qu'il a vue aux jumelles. Il est obsédé par cette ligne géologique. Il dit qu'elle est la clé.",
-                  "weight": 0.0
+                  "weight": 0.2
                 },
                 {
                     "name": "Veste",
@@ -201,8 +196,8 @@
                 },
                 {
                     "name": "Thermos",
-                    "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre. (+40 chaleur)",
-                    "weight": 0.8,
+                    "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre. (+25 chaleur)",
+                    "weight": 2.0,
                     "effect": {
                         "variable": "heat",
                         "value": 40
@@ -219,7 +214,7 @@
                 {
                     "name": "Piolet_Carbone",
                     "description": "Lame courbée agressive. Facilite l'ancrage et réduit l'effort technique. (difficultée escalade - 25%)",
-                    "weight": 0.9,
+                    "weight": 3.5,
                     "effect": {
                         "type": "passif",
                         "variable": "q_difficulty",
@@ -237,7 +232,7 @@
                 {
                     "name": "Magnésie",
                     "description": "Sèche instantanément les mains pour une adhérence parfaite. Simplifie la prise. (difficultée escalade - 10%)",
-                    "weight": 0.2,
+                    "weight": 1.0,
                     "effect": {
                         "type": "passif",
                         "variable": "q_difficulty",
@@ -254,14 +249,14 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 4
         }
     },
     "l3_paroi_lisse": {
       "name": "Paroi Lisse (S)",
       "image":"l3_paroi_lisse.jpeg",
       "description": "Le granit est poli comme du marbre. Aucune prise, aucune fissure. Vos crampons crissent inutilement sur la surface. L'escalade va être compliquer.",
-      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 5, "min_inputs": 5, "max_inputs": 10, "time": 3.0, "pool": "AGP" },
       "exits": { "N": null, "E": null, "S": "l3_cheminee", "O": "l3_paroi_lisse", "U": "l4_camp1" },
       "challenge_exit": "U"
     },
@@ -285,12 +280,12 @@
                   "name": "Journal_3",
                   "description": "Une page déchirée avec violence. L'écriture est hâtive, presque illisible par endroits. (lire le document avec 'use')",
                   "lore": "Jour 20. Tempête. Bloqués depuis trois jours. Pégase ne dort plus. Il dit qu'il entend la montagne chanter. Il a jeté les radios pour nous alléger.",
-                  "weight": 0.0
+                  "weight": 0.2
                 },
                 {
                     "name": "Gel",
                     "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau. (+25 énergie)",
-                    "weight": 0.1,
+                    "weight": 1.5,
                     "effect": {
                         "variable": "energy",
                         "value": 25
@@ -299,7 +294,7 @@
                 {
                     "name": "Chaufferette",
                     "description": "Un petit sachet à craquer. Dégage une chaleur intense pendant quelques minutes. (+10 chaleur)",
-                    "weight": 0.1,
+                    "weight": 0.5,
                     "effect": {
                         "variable": "heat",
                         "value": 10
@@ -321,7 +316,7 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 5
         }
     },
     "l4_serac_menacant": {
@@ -332,7 +327,7 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 5
         }
     },
     "l4_crevasse": {
@@ -343,7 +338,7 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 5
         }
     },
     "l4_goulotte": {
@@ -356,14 +351,14 @@
       "name": "Plateau du Vent (S)",
       "image":"l4_plateau.jpeg",
       "description": "Vous émergez sur une étendue plate. Le vent n'est plus une rafale, c'est un mur solide qui vous pousse en arrière. Le bruit est assourdissant.",
-      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 5, "min_inputs": 8, "max_inputs": 15, "time": 5.0, "pool": "AGP" },
       "exits": { "N": null, "E": null, "S": null, "O": "l4_echo", "U": "l5_nid" },
       "challenge_exit": "U",
       "items": [
                 {
                     "name": "Lunettes",
                     "description": "Augmentent les contrastes pour distinguer la glace bleue (solide) de la neige soufflée (piège). (difficultée zone dangereuse - 25%)",
-                    "weight": 0.1,
+                    "weight": 3.0,
                     "effect": {
                         "type": "passif",
                         "variable": "d_difficulty",
@@ -395,7 +390,7 @@
                 {
                     "name": "Ration",
                     "description": "Une boîte de conserve rouillée contenant une pâte de viande et de graisse. Infect, mais c'est du carburant pur. (+50 énergie)",
-                    "weight": 0.4,
+                    "weight": 3.0,
                     "effect": {
                         "variable": "energy",
                         "value": 50
@@ -418,12 +413,12 @@
                   "name": "Radio de Pégase",
                   "description": "Un talkie-walkie professionnel de marque japonaise. L'antenne est tordue et l'écran LCD est fissuré. (utilisable avec 'use')",
                   "lore": "Un appareil gelé. En l'activant, on entend une boucle : 'Le Camp 4 n'existe pas... La roche est chaude ici... C'est de l'or pur... Dites à ma femme que je ne redescends pas.'",
-                  "weight": 0.5
+                  "weight": 0.2
                 },
                 {
                   "name": "Thermos",
-                  "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre. (+40 chaleur)",
-                  "weight": 0.8,
+                  "description": "Un mélange tibétain dense et salé. Le gras du beurre de yak brûle la gorge mais réchauffe immédiatement le ventre. (+25 chaleur)",
+                  "weight": 2.0,
                   "effect": {
                       "variable": "heat",
                       "value": 40
@@ -440,7 +435,7 @@
                 {
                   "name": "Masque",
                   "description": "Enrichit l'air raréfié. Indispensable au-dessus de 7000m pour ne pas s'épuiser à chaque pas. (perte d'énergie - 25%)",
-                  "weight": 1.5,
+                  "weight": 3.0,
                   "effect": {
                       "type": "passif",
                       "variable": "e_coeff_damage",
@@ -470,7 +465,7 @@
                 {
                     "name": "Gel",
                     "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau. (+25 énergie)",
-                    "weight": 0.1,
+                    "weight": 1.5,
                     "effect": {
                         "variable": "energy",
                         "value": 25
@@ -479,7 +474,7 @@
                 {
                     "name": "Gel",
                     "description": "Une pâte sucrée collante au goût chimique. Un coup de fouet immédiat pour le cerveau. (+25 énergie)",
-                    "weight": 0.1,
+                    "weight": 1.5,
                     "effect": {
                         "variable": "energy",
                         "value": 25
@@ -495,14 +490,14 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 6
         }
     },
     "l5_veine": {
       "name": "La Veine Jaune (S)",
       "image":"l5_veine.jpeg",
       "description": "Une bande de calcaire jaune traverse la roche noire. C'est le fil d'Ariane vers le sommet. Suivez le jaune.",
-      "challenge": { "nb_tours": 3, "min_inputs": 2, "max_inputs": 4, "time": 3.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 5, "min_inputs": 8, "max_inputs": 15, "time": 5.0, "pool": "AGPAGPAGPAGPW" },
       "exits": { "N": null, "E": null, "S": null, "O": "l5_iris", "U": "l6_veine_entree" },
       "challenge_exit": "U"
     },
@@ -524,7 +519,7 @@
                   "name": "Carnet_de_Pegase",
                   "description": "Un petit carnet à spirale, couvert de givre. Les pages sont remplies de dessins de cercles concentriques et de notes cryptiques. (lire le document avec 'use')",
                   "lore": "Pégase croyait que la montagne était vivante, qu'elle communiquait à travers des motifs géologiques. Il a dessiné ces cercles, convaincu qu'ils étaient la clé pour comprendre la face EST.",
-                  "weight": 0.0
+                  "weight": 0.2
                 }
             ]
     },
@@ -536,7 +531,7 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 8
         }
     },
     "l6_traversee": {
@@ -547,14 +542,14 @@
       "danger": {
             "rows": 6,
             "cols": 6,
-            "mines": 0
+            "mines": 8
         }
     },
     "l6_arete": {
       "name": "Arête Sommitale (S)",
       "image":"l6_arete.jpeg",
       "description": "Vous y êtes presque. L'arête est tranchante comme un couteau. À gauche, le Pakistan. À droite, la Chine. Au bout, le ciel.",
-      "challenge": { "nb_tours": 5, "min_inputs": 20, "max_inputs": 25, "time": 40.0, "pool": "AGP" },
+      "challenge": { "nb_tours": 8, "min_inputs": 10, "max_inputs": 20, "time": 5.0, "pool": "AGPAGPAGPAGPAGPAGPAGPAGPAGPWMN" },
       "exits": { "N": null, "E": null, "S": null, "O": "l6_traversee", "U": "l7_sommet" },
       "challenge_exit": "U"
     },

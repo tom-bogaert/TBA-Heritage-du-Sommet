@@ -404,7 +404,12 @@ class GameGUI(tk.Tk):
         
         if self.game.finished:
             self.entry.configure(state="disabled")
-            self.after(2000, self._on_close)
+            
+            print("\n" + "="*30)
+            print(" APPUYEZ SUR [ENTRÉE] POUR QUITTER ")
+            print("="*30)
+
+            self.bind("<Return>", lambda e: self._on_close())
 
     def _on_close(self):
         sys.stdout = self.original_stdout

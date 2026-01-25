@@ -100,10 +100,10 @@ class Actions:
         
         qte_climb = QTE(
             game,  
-            nb_tours=int(config.get("nb_tours", 3) * total_diff),
+            nb_tours=int(config.get("nb_tours", 3)),
             min_inputs=int(config.get("min_inputs", 2) * total_diff),
             max_inputs=int(config.get("max_inputs", 4) * total_diff),
-            temps_reaction=config.get("time", 2.0),
+            temps_reaction=config.get("time", 2.0) / total_diff,
             pool_lettres=config.get("pool", "AZERTY")
         )
         
@@ -113,6 +113,12 @@ class Actions:
         if reussite:
             print("\n--- PAROI FRANCHIS ---")
             print("Vous avez vaincu cet obstacle. Les sorties sont maintenant accessibles.")
+
+            player.mental_health -= 18
+            print(f"|🧠 L'effort intense et le vide entament votre lucidité (-17 santé mentale).")
+            
+            if player.mental_health <= 0:
+                player.mental_health = 0
             
             direction_sortie = current_room.challenge_exit
             if direction_sortie and direction_sortie in current_room.exits:
