@@ -222,7 +222,7 @@ class Game:
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
         print("La Face Est du K2 est le dernier grand problème de l'himalayisme. Trop raide, trop exposée aux avalanches, jamais vaincue. ")
         print("Le passé (Projet Pégase) : Il y a 5 ans, une expédition ultra-médiatisée et suréquipée, menée par un alpiniste charismatique surnommé \"Pégase\", a tenté l'impossible. Ils ont disparu corps et biens après le Camp 2. ")
-        print("Le présent (Vous) : Vous êtes là pour réaliser l'incomplit, sur les traces de leurs aventures.")
+        print("Le présent (Vous) : Vous êtes là pour réalisé l'inaccomplit, sur les traces de leurs aventures.")
         print("Entrez 'help' si vous avez besoin d'aide.")
         print(self.player.current_room.get_long_description())
 
