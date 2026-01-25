@@ -5,6 +5,7 @@ Bienvenue dans **Héritage du Sommet**, un jeu d'aventure textuel immersif (Inte
 <video src="Heritage_Du_Sommet.mp4" controls="controls" style="max-width: 100%;">
   Votre navigateur ne supporte pas la lecture de vidéos.
 </video>
+[![Lien vidéos :](assets/Heritage_Du_Sommet.mp4)](Heritage_Du_Sommet.mp4)
 
 ## 🏗️ Base de Travail
 
@@ -123,6 +124,7 @@ Pour une vue détaillée de la structure du code, vous pouvez consulter le :
 
 ---
 *Bonne chance pour l'ascension. La montagne vous observe.*
+
 
 
 
