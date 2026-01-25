@@ -97,5 +97,12 @@ Pour triompher, vous devrez valider les étapes suivantes :
 3.  **Première Ascension** : Réussir à grimper la première paroi verticale du glacier.
 4.  **Le toit du monde** : Atteindre la salle finale, le LOCUS, en vie.
 
+
+## 🎮 Mode développeur
+
+Pour tester le jeu sans se confronter à la dificulté du jeu, il y a un **GODMODE** dans lequel le joueur est invincible et les épreuves sont automatiques.
+Pour lancer le jeu en **GODMODE**, allez dans la classe player du fichier player.py et passer la variable global **GODMODE** à `True`.
+
+
 ---
 *Bonne chance pour l'ascension. La montagne vous observe.*
