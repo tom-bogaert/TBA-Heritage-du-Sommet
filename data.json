@@ -239,6 +239,7 @@
                     "description": "Sèche instantanément les mains pour une adhérence parfaite. Simplifie la prise. (difficultée escalade - 10%)",
                     "weight": 0.2,
                     "effect": {
+                        "type": "passif",
                         "variable": "q_difficulty",
                         "value": 0.90
                     }

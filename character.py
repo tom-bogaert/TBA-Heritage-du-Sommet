@@ -42,7 +42,7 @@ class Character:
 
     def get_msg(self):
         if not self.msgs:
-            return "Ce personnage n'a rien à dire."
+            return "|Ce personnage n'a rien à dire."
         
         msg = self.msgs.pop(0)
         self.msgs.append(msg)

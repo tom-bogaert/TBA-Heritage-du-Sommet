@@ -54,4 +54,4 @@ class QuestManager:
             if q.title.lower() == quest_title.lower():
                 status = "Terminée" if q.completed else "En cours"
                 return f"\n--- DÉTAILS DE LA QUÊTE ---\nTitre : {q.title}\nDescription : {q.description}\nStatut : {status}\nRécompense : {q.reward}\n"
-        return f"Aucune quête trouvée avec le titre '{quest_title}'."
+        return f"|Aucune quête trouvée avec le titre '{quest_title}'."
