@@ -101,7 +101,7 @@ class Actions:
         
         qte_climb = QTE(
             game,  
-            nb_tours=int(config.get("nb_tours", 3)),
+            nb_tours=int(config.get("nb_tours", 3)*total_diff),
             min_inputs=math.ceil(config.get("min_inputs", 2) * total_diff),
             max_inputs=math.ceil(config.get("max_inputs", 4) * total_diff),
             temps_reaction=config.get("time", 2.0) / total_diff,

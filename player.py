@@ -92,7 +92,7 @@ class Player():
         self.heat -= 8 * self.h_coeff_damage * coeff
         if self.heat < 0:
             self.heat = 0
-            print("\|n💀 DÉFAITE : Vous êtes mort de froid.")
+            print("\n|💀 DÉFAITE : Vous êtes mort de froid.")
             print("|Votre corps resteras congelé ici jusqu'as la fin des temps...")
             return True
         return False

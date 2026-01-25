@@ -61,7 +61,7 @@ class Game:
         q4 = Quest("Rencontre_Ivan", "Parler à l'alpiniste russe Ivan.", "TALK_Ivan", "Santé Mentale +1")
         q5 = Quest("Remise_en_question", "Se remettre en question face à son reflet (autre_d).", "TALK_Autre_d", "Santé Mentale +1")
         q6 = Quest("Paix_interieure", "Faire la paix avec soi-même (autre_b).", "TALK_Autre_b", "Acceptation de sois")
-        q7 = Quest("Appel_du_vide", "Retrouver la radio de Pégase.", "TAKE_Radio de Pégase", "Santé Mentale +1")
+        q7 = Quest("Appel_du_vide", "Retrouver la radio de Pégase.", "TAKE_Radio", "Santé Mentale +1")
         q8 = Quest("Secrets_de_Pegase", "Trouver le Carnet de Pégase.", "TAKE_Carnet_de_Pegase", "Santé Mentale +1")
         q9 = Quest("Survie_passée", "Rejoindre le camp abandonné.", "MOVE_Camp 1.5 Abandonné", "Santé Mentale +1")
         q10 = Quest("Porte_de_la_mort", "Rejoindre le camp 'Le Nid'.", "MOVE_Le Nid (Camp 2) (E)", "Santé Mentale +1")
@@ -137,7 +137,7 @@ class Game:
                 print("|Vous atteignez enfin le point culminant. L'air est trop rare, le silence trop lourd.")
                 print("|La 'Veine Jaune' brille d'un éclat insoutenable. Votre esprit se fissure.")
                 print("|Avant de vous éteindre vous repensez au chemin parcouru jusqu'à présent et regrettez vos QUÊTES non acomplis...")
-                print("|💀 DÉFAITE : Vous avez atteint le sommet, mais vous avez perdu la raison.")
+                print("|🧠 MAUVAISE FIN : Vous avez atteint le sommet, mais vous avez perdu la raison.")
                 print("|Votre corps reste prostré, fixant l'éternité...")
                 
                 self.player.mental_health = 0

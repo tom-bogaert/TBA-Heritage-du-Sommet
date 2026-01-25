@@ -6,7 +6,7 @@
       "name": "Mess des équipes",
       "image": "l1_mess.png",
       "description": "L'air est saturé d'une odeur de café brûlé et de transpiration rance. D'autres équipes sont recroquevillées autour des réchauds, murmurant dans des langues étrangères. Personne ne vous regarde dans les yeux. L'ambiance est lourde, comme avant un orage.",
-      "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null },
+      "exits": { "N": "l1_camp_base", "E": "l1_glacier", "S": null, "O": null},
       "items": [
           { "name": "piolet",
             "description": "un piolet technique en acier trempé (permet d'escalader les parois)", "weight": 1.0 },
@@ -149,7 +149,8 @@
                         "type": "passif",
                         "variable": "h_coeff_damage",
                         "value": 0.75
-                    }
+                    },
+                    "lore": "A déja été utilisée par un alpiniste inconnu. Elle possède le logo de l'expédition Pégase. Des traces de gelures sont visibles sur les bords."
                 },
                 {
                     "name": "Gel",
@@ -410,8 +411,8 @@
       "exits": { "N": "l5_balcon", "E": null, "S": "l5_vide", "O": null },
       "items": [
                {
-                  "name": "Radio de Pégase",
-                  "description": "Un talkie-walkie professionnel de marque japonaise. L'antenne est tordue et l'écran LCD est fissuré. (utilisable avec 'use')",
+                  "name": "Radio",
+                  "description": "Un talkie-walkie professionnel de l'expédition Pégase. L'antenne est tordue et l'écran LCD est fissuré. (utilisable avec 'use')",
                   "lore": "Un appareil gelé. En l'activant, on entend une boucle : 'Le Camp 4 n'existe pas... La roche est chaude ici... C'est de l'or pur... Dites à ma femme que je ne redescends pas.'",
                   "weight": 0.2
                 },
@@ -457,7 +458,7 @@
       "exits": { "N": "l5_veine", "E": null, "S": "l5_vide", "O": "l5_balcon" },
       "items": [
                 {
-                  "name": "Dictaphone Médical",
+                  "name": "Dictaphone",
                   "description": "Un petit appareil enregistreur en plastique gris. Les piles sont presque mortes, le voyant rouge clignote faiblement. (utilisable avec 'use')",
                   "lore": "La voix de Doc Miller crachote : 'Ils ont tous le mal des montagnes. Mais ils ne souffrent pas. Ils sourient. Ils marchent vers la mort comme des somnambules.'",
                   "weight": 0.2
